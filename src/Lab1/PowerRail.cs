@@ -13,6 +13,7 @@ public class PowerRail : Railway
     {
         if (Force > maxForce)
         {
+            Console.WriteLine("Applied force is too high");
             return -1;
         }
 

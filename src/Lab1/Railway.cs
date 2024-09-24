@@ -31,6 +31,7 @@ public class Railway
 
             if (moved <= 0)
             {
+                Console.WriteLine("Unable to drive through railway");
                 return -1;
             }
         }

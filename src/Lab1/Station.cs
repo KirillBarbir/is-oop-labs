@@ -13,7 +13,7 @@ public class Station : Railway
     {
         if (SpeedLimit < speed)
         {
-            Console.WriteLine("Too much speed");
+            Console.WriteLine("Too high speed");
             return -1;
         }
 
