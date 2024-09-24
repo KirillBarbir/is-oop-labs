@@ -2,7 +2,7 @@
 
 public class Train
 {
-    public double Speed { get; private set; }
+    internal double Speed { get; private set; }
 
     private double Mass { get; }
 
@@ -17,17 +17,6 @@ public class Train
         Acceleration = acceleration;
         MaxForce = maxForce;
     }
-
-    /*public bool GoThroughRoute(Railway[] route, double accuracy)
-    {
-        bool routeComplete = true;
-        foreach (Railway t in route)
-        {
-            routeComplete |= GoThroughRailway(t, accuracy);
-        }
-
-        return routeComplete;
-    }*/
 
     public bool GoThroughRailway(Railway railway, double accuracy)
     {

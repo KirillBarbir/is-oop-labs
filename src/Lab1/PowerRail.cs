@@ -13,7 +13,7 @@ public class PowerRail : Railway
     {
         if (Force > maxForce)
         {
-            return -1; // TODO: global constant?
+            return -1;
         }
 
         double newAcceleration = acceleration + (Force / mass);

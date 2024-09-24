@@ -9,7 +9,7 @@ public class Railway
         Length = length;
     }
 
-    public virtual double DriveThrough(double speed, double accuracy, double maxForce, double mass, double acceleration) // TODO: figure out acceleration
+    public virtual double DriveThrough(double speed, double accuracy, double maxForce, double mass, double acceleration = 0)
     {
         if (Iterate(speed, accuracy, acceleration) < 0)
         {
