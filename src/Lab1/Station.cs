@@ -9,19 +9,22 @@ public class Station : Railway
         SpeedLimit = speedLimit;
     }
 
-    public override double DriveThrough(double speed, double accuracy, double maxForce, double mass, double acceleration = 0)
+    public override SpeedResult DriveThrough(double speed, double accuracy, double maxForce, double mass, double acceleration = 0)
     {
+        ExecutingResult outputExecutingResult = ExecutingResult.Success;
         if (SpeedLimit < speed)
         {
-            Console.WriteLine("Too high speed");
-            return -1;
+            // Too high speed;
+            outputExecutingResult = ExecutingResult.Failure;
         }
 
-        if (Iterate(speed, accuracy, acceleration) < 0)
+        SpeedResult newSpeedResult = Iterate(speed, accuracy);
+        if (outputExecutingResult != ExecutingResult.Success)
         {
-            return -1;
+            var outputSpeedResult = new SpeedResult(newSpeedResult.Speed, ExecutingResult.Failure);
+            return outputSpeedResult;
         }
 
-        return speed;
+        return newSpeedResult;
     }
 }

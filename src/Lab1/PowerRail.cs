@@ -9,16 +9,23 @@ public class PowerRail : Railway
         Force = force;
     }
 
-    public override double DriveThrough(double speed, double accuracy, double maxForce, double mass, double acceleration)
+    public override SpeedResult DriveThrough(double speed, double accuracy, double maxForce, double mass, double acceleration)
     {
+        ExecutingResult outputExecutingResult = ExecutingResult.Success;
         if (Force > maxForce)
         {
-            Console.WriteLine("Applied force is too high");
-            return -1;
+            // Applied force is too high;
+            outputExecutingResult = ExecutingResult.Failure;
         }
 
         double newAcceleration = acceleration + (Force / mass);
-        double newSpeed = Iterate(speed, accuracy, newAcceleration);
-        return newSpeed;
+        SpeedResult newSpeedResult = Iterate(speed, accuracy, newAcceleration);
+        if (outputExecutingResult != ExecutingResult.Success)
+        {
+            var outputSpeedResult = new SpeedResult(newSpeedResult.Speed, ExecutingResult.Failure);
+            return outputSpeedResult;
+        }
+
+        return newSpeedResult;
     }
 }

@@ -12,6 +12,16 @@ public class Train
 
     public Train(double mass, double maxForce, double speed = 0.0,   double acceleration = 0.0)
     {
+        if (mass < 0)
+        {
+            throw new ArgumentException("Mass cannot be negative");
+        }
+
+        if (maxForce < 0)
+        {
+            throw new ArgumentException("MaxForce cannot be negative");
+        }
+
         Mass = mass;
         Speed = speed;
         Acceleration = acceleration;
@@ -20,13 +30,13 @@ public class Train
 
     public bool GoThroughRailway(Railway railway, double accuracy)
     {
-        double newSpeed = railway.DriveThrough(Speed, accuracy, MaxForce, Mass, Acceleration);
-        if (newSpeed < 0)
+        SpeedResult newSpeedResult = railway.DriveThrough(Speed, accuracy, MaxForce, Mass, Acceleration);
+        Speed = newSpeedResult.Speed;
+        if (newSpeedResult.Result != ExecutingResult.Success)
         {
             return false;
         }
 
-        Speed = newSpeed;
         return true;
     }
 }

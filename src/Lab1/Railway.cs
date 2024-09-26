@@ -2,25 +2,21 @@
 
 public class Railway
 {
-    private protected double Length { get; }
+    private double Length { get; }
 
     public Railway(double length)
     {
         Length = length;
     }
 
-    public virtual double DriveThrough(double speed, double accuracy, double maxForce, double mass, double acceleration = 0)
+    public virtual SpeedResult DriveThrough(double speed, double accuracy, double maxForce, double mass, double acceleration = 0)
     {
-        if (Iterate(speed, accuracy, acceleration) < 0)
-        {
-            return -1;
-        }
-
-        return speed;
+        return Iterate(speed, accuracy, acceleration);
     }
 
-    private protected double Iterate(double speed, double accuracy, double acceleration = 0)
+    private protected SpeedResult Iterate(double speed, double accuracy, double acceleration = 0)
     {
+        ExecutingResult outputExecutingResult = ExecutingResult.Success;
         double resultSpeed = speed;
         double lengthLeft = Length;
         while (lengthLeft > 0)
@@ -31,11 +27,14 @@ public class Railway
 
             if (moved <= 0)
             {
-                Console.WriteLine("Unable to drive through railway");
-                return -1;
+                // Unable to drive through railway;
+                outputExecutingResult = ExecutingResult.Failure;
+                var failureOutput = new SpeedResult(resultSpeed, outputExecutingResult);
+                return failureOutput;
             }
         }
 
-        return resultSpeed;
+        var output = new SpeedResult(resultSpeed, outputExecutingResult);
+        return output;
     }
 }
