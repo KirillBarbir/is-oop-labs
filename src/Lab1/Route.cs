@@ -17,7 +17,7 @@ public class Route
         bool routeComplete = true;
         foreach (Railway t in Railways)
         {
-            routeComplete &= train.GoThroughRailway(t, accuracy);
+            routeComplete = train.GoThroughRailway(t, accuracy);
 
             if (!routeComplete)
             {
