@@ -16,4 +16,14 @@ public class Lecture : BasePrototype
         lectureClone.BaseID = Id;
         return lectureClone;
     }
+
+    public void EditContent(string newContent, int myId)
+    {
+        if (AuthorID != myId)
+        {
+            return;
+        }
+
+        Content = newContent;
+    }
 }

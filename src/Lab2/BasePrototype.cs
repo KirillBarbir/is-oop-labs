@@ -28,4 +28,24 @@ public class BasePrototype : IStoredType
         };
         return clone;
     }
+
+    public void EditName(string newName, int myId)
+    {
+        if (myId != AuthorID)
+        {
+            return;
+        }
+
+        Name = newName;
+    }
+
+    public void EditDescription(string newDescription, int myId)
+    {
+        if (myId != AuthorID)
+        {
+            return;
+        }
+
+        Description = newDescription;
+    }
 }

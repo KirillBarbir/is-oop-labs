@@ -11,10 +11,10 @@ public class ZachyotSubject : Subject
         int authorId,
         string name,
         string description,
-        Collection<int> labworkIDs,
-        Collection<int> lectureIDs,
+        Collection<Labwork> labworks,
+        Collection<Lecture> lectures,
         int pointThreshold)
-        : base(id, authorId, name, description, labworkIDs, lectureIDs)
+        : base(id, authorId, name, description, labworks, lectures)
     {
         PointThreshold = pointThreshold;
     }
@@ -22,7 +22,7 @@ public class ZachyotSubject : Subject
     public override ZachyotSubject Clone(int newId)
     {
         var subjectClone =
-            new ZachyotSubject(newId, AuthorID, Name, Description, LabworkIDs, LectureIDs, PointThreshold);
+            new ZachyotSubject(newId, AuthorID, Name, Description, Labworks, Lectures, PointThreshold);
         subjectClone.BaseID = Id;
         return subjectClone;
     }

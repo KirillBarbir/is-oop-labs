@@ -11,17 +11,17 @@ public class ExamSubject : Subject
         int authorId,
         string name,
         string description,
-        Collection<int> labworkIDs,
-        Collection<int> lectureIDs,
+        Collection<Labwork> labworks,
+        Collection<Lecture> lectures,
         int examPoints)
-         : base(id, authorId, name, description, labworkIDs, lectureIDs)
+         : base(id, authorId, name, description, labworks, lectures)
      {
          ExamPoints = examPoints;
      }
 
     public override ExamSubject Clone(int newId)
     {
-        var subjectClone = new ExamSubject(newId, AuthorID, Name, Description, LabworkIDs, LectureIDs, ExamPoints);
+        var subjectClone = new ExamSubject(newId, AuthorID, Name, Description, Labworks, Lectures, ExamPoints);
         subjectClone.BaseID = Id;
         return subjectClone;
     }

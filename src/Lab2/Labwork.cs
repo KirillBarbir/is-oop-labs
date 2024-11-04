@@ -19,4 +19,24 @@ public class Labwork : BasePrototype
         labworkClone.BaseID = Id;
         return labworkClone;
     }
+
+    public void EditPoints(int newPoints, int myId)
+    {
+        if (AuthorID != myId)
+        {
+            return;
+        }
+
+        Points = newPoints;
+    }
+
+    public void EditPointsRequirements(string newPointsRequirements, int myId)
+    {
+        if (AuthorID != myId)
+        {
+            return;
+        }
+
+        LabworkPointsRequirements = newPointsRequirements;
+    }
 }
