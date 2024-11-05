@@ -8,12 +8,17 @@ public class GenericRepository<T> where T : IStoredType
     {
         if (!_dictionary.TryAdd(item.Id, item))
         {
-            throw new ArgumentException($"Item with id {item.Id} already exists");
+            Console.WriteLine($"Item with id {item.Id} already exists");
         }
     }
 
     public T? GetItem(int key)
     {
-        return _dictionary[key];
+        if (!_dictionary.TryGetValue(key, out T? item))
+        {
+            Console.WriteLine($"Item with id {key} does not exist");
+        }
+
+        return item;
     }
 }
