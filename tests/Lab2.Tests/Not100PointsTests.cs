@@ -11,6 +11,7 @@ public class Not100PointsTests
     [Fact]
     public void Not100PointsTest1()
     {
+        // arrange
         var creator = new StudyMaterialCreator();
         creator.Authorize(1);
         Lecture lecture1 = creator.CreateLecture(1, "Lab1", "Description1", "content");
@@ -19,13 +20,18 @@ public class Not100PointsTests
         Labwork labwork2 = labwork1.Clone(2);
         var labworks = new Collection<Labwork> { labwork1, labwork2 };
         var lectures = new Collection<Lecture> { lecture1, lecture2 };
+
+        // act
         ExamSubject? subject1 = creator.CreateExamSubject(1, "Sub1", "Description1", labworks, lectures, 71);
+
+        // assert
         Assert.Null(subject1);
     }
 
     [Fact]
     public void Not100PointsTest2()
     {
+        // arrange
         var creator = new StudyMaterialCreator();
         creator.Authorize(1);
         Lecture lecture1 = creator.CreateLecture(1, "Lab1", "Description1", "content");
@@ -34,7 +40,11 @@ public class Not100PointsTests
         Labwork labwork2 = labwork1.Clone(2);
         var labworks = new Collection<Labwork> { labwork1, labwork2 };
         var lectures = new Collection<Lecture> { lecture1, lecture2 };
+
+        // act
         ZachyotSubject? subject1 = creator.CreateZachyotSubject(1, "Sub1", "Description1", labworks, lectures, 70);
+
+        // assert
         Assert.Null(subject1);
     }
 }

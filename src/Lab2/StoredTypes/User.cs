@@ -1,6 +1,6 @@
 ﻿namespace Itmo.ObjectOrientedProgramming.Lab2;
 
-public class User
+public class User : IStoredType
 {
     public int Id { get; private set; }
 
