@@ -1,10 +1,8 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Itmo.ObjectOrientedProgramming.Lab2;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2;
 
 public abstract class BaseSubjectBuilder : ISubjectBuilder
 {
-    protected Collection<Labwork> Labworks { get; private set; } = [];
+    protected ICollection<Labwork> Labworks { get; private set; } = [];
 
     private int? Id { get; set; }
 
@@ -14,7 +12,7 @@ public abstract class BaseSubjectBuilder : ISubjectBuilder
 
     private string Description { get; set; } = string.Empty;
 
-    private Collection<Lecture> Lectures { get; set; } = [];
+    private ICollection<Lecture> Lectures { get; set; } = [];
 
     private int? Points { get; set; }
 
@@ -42,13 +40,13 @@ public abstract class BaseSubjectBuilder : ISubjectBuilder
         return this;
     }
 
-    public ISubjectBuilder WithLabworks(Collection<Labwork> labworks)
+    public ISubjectBuilder WithLabworks(ICollection<Labwork> labworks)
     {
         Labworks = labworks;
         return this;
     }
 
-    public ISubjectBuilder WithLectures(Collection<Lecture> lectures)
+    public ISubjectBuilder WithLectures(ICollection<Lecture> lectures)
     {
         Lectures = lectures;
         return this;
@@ -77,7 +75,7 @@ public abstract class BaseSubjectBuilder : ISubjectBuilder
         int authorId,
         string name,
         string description,
-        Collection<Labwork> labworks,
-        Collection<Lecture> lectures,
+        ICollection<Labwork> labworks,
+        ICollection<Lecture> lectures,
         int points);
 }

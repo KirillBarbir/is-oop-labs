@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Itmo.ObjectOrientedProgramming.Lab2;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2;
 
 public class ZachyotSubjectBuilder : BaseSubjectBuilder
 {
@@ -9,8 +7,8 @@ public class ZachyotSubjectBuilder : BaseSubjectBuilder
         int authorId,
         string name,
         string description,
-        Collection<Labwork> labworks,
-        Collection<Lecture> lectures,
+        ICollection<Labwork> labworks,
+        ICollection<Lecture> lectures,
         int points)
     {
         int sum = 0;

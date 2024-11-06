@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Itmo.ObjectOrientedProgramming.Lab2;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2;
 
 public class ZachyotSubject : Subject
 {
@@ -11,8 +9,8 @@ public class ZachyotSubject : Subject
         int authorId,
         string name,
         string description,
-        Collection<Labwork> labworks,
-        Collection<Lecture> lectures,
+        ICollection<Labwork> labworks,
+        ICollection<Lecture> lectures,
         int pointThreshold)
         : base(id, authorId, name, description, labworks, lectures)
     {

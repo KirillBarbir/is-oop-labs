@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Itmo.ObjectOrientedProgramming.Lab2;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2;
 
 public class StudyMaterialCreator
 {
@@ -34,8 +32,8 @@ public class StudyMaterialCreator
         int id,
         string name,
         string description,
-        Collection<Labwork> labworks,
-        Collection<Lecture> lectures,
+        ICollection<Labwork> labworks,
+        ICollection<Lecture> lectures,
         int pointThreshold)
     {
         var builder = new ZachyotSubjectBuilder();
@@ -53,8 +51,8 @@ public class StudyMaterialCreator
         int id,
         string name,
         string description,
-        Collection<Labwork> labworks,
-        Collection<Lecture> lectures,
+        ICollection<Labwork> labworks,
+        ICollection<Lecture> lectures,
         int examPoints)
     {
         var builder = new ExamSubjectBuilder();

@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Itmo.ObjectOrientedProgramming.Lab2;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2;
 
 public interface ISubjectBuilder
 {
@@ -12,9 +10,9 @@ public interface ISubjectBuilder
 
     ISubjectBuilder WithDescription(string description);
 
-    ISubjectBuilder WithLabworks(Collection<Labwork> labworks);
+    ISubjectBuilder WithLabworks(ICollection<Labwork> labworks);
 
-    ISubjectBuilder WithLectures(Collection<Lecture> lectures);
+    ISubjectBuilder WithLectures(ICollection<Lecture> lectures);
 
     ISubjectBuilder WithPoints(int points);
 

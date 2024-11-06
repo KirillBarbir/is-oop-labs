@@ -16,7 +16,11 @@ public class CloneTests
         var creator = new StudyMaterialCreator();
         creator.Authorize(1);
         Labwork labwork1 = creator.CreateLabwork(1, "Lab1", "Description1", 15, "15 points");
+
+        // act
         Labwork labwork2 = labwork1.Clone(2);
+
+        // assert
         Assert.Equal(labwork1.Id, labwork2.AuthorID);
     }
 
