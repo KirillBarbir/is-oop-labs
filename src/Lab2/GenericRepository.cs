@@ -6,19 +6,11 @@ public class GenericRepository<T> where T : IStoredType
 
     public void Add(T item)
     {
-        if (!_dictionary.TryAdd(item.Id, item))
-        {
-            Console.Error.WriteLine($"Item with id {item.Id} already exists");
-        }
+        _dictionary.TryAdd(item.Id, item);
     }
 
     public T? GetItem(int key)
     {
-        if (!_dictionary.TryGetValue(key, out T? item))
-        {
-            Console.Error.WriteLine($"Item with id {key} does not exist");
-        }
-
-        return item;
+        return _dictionary.GetValueOrDefault(key);
     }
 }
