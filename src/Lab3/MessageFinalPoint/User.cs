@@ -1,8 +1,8 @@
 ﻿namespace Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint;
 
-public class User : IMessageFinalPoint
+public class User
 {
-    public ICollection<UserMessage> Messages { get; } = [];
+    private Dictionary<Message, bool> Messages { get; } = [];
 
     public User(string name)
     {
@@ -13,18 +13,33 @@ public class User : IMessageFinalPoint
 
     public void ReceiveMessage(Message message)
     {
-        var userMessage = new UserMessage(message);
-        Messages.Add(userMessage);
+        Messages[message] = false;
     }
 
-    public void MarkMessageAsRead(Message message)
+    public bool MarkMessageAsRead(Message message)
     {
-        foreach (UserMessage currentMessage in Messages)
+        if (!Messages.TryGetValue(message, out bool read))
         {
-            if (currentMessage.Message == message)
-            {
-                currentMessage.IsRead = true;
-            }
+            return false;
         }
+
+        if (read)
+        {
+            return false;
+        }
+
+        Messages[message] = true;
+        return true;
+    }
+
+    public bool CheckReadStatus(Message message)
+    {
+        Messages.TryGetValue(message, out bool read);
+        return read;
+    }
+
+    public int GetMessageCount()
+    {
+        return Messages.Count;
     }
 }

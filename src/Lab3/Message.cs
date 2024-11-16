@@ -7,4 +7,4 @@ public enum Importance
     VeryImportant,
 }
 
-public record Message(string Title, string Body, Importance Importance);
+public record Message(string Title, string Body, Importance Importance) : IEquatable<Message>;

@@ -16,10 +16,11 @@ public class UserDestination : BaseDestination
     {
         if (!CheckImportance(message.Importance))
         {
-            Logger.Log(message + "is not sent to " + ToString());
+            Logger.Log(message + "is not sent to " + User);
             return;
         }
 
         User.ReceiveMessage(message);
+        Logger.Log(message + "is sent to " + User);
     }
 }

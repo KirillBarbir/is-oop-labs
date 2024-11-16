@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.DisplayDrivers;
+namespace Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Displays.DisplayDrivers;
 
 public class DisplayFileDriver : IDisplayDriver
 {
@@ -23,10 +23,15 @@ public class DisplayFileDriver : IDisplayDriver
         Color = color;
     }
 
-    public void Print(string text)
+    public void Print(string? text)
     {
+        if (text == null)
+        {
+            return;
+        }
+
         File.AppendAllText(
-            FileName,
-            Crayon.Output.Rgb(Color.R, Color.G, Color.B).Text(text) + Environment.NewLine);
+                FileName,
+                Crayon.Output.Rgb(Color.R, Color.G, Color.B).Text(text) + Environment.NewLine);
     }
 }

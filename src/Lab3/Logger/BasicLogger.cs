@@ -2,15 +2,18 @@
 
 public class BasicLogger : ILogger
 {
-    public BasicLogger(string outputFileName)
+    private readonly IBasicLoggerLogWrapper _basicLoggerLogWrapper;
+
+    public BasicLogger(string outputFileName, IBasicLoggerLogWrapper basicLoggerLogWrapper)
     {
         OutputFileName = outputFileName;
+        _basicLoggerLogWrapper = basicLoggerLogWrapper;
     }
 
     public string OutputFileName { get; }
 
     public void Log(string text)
     {
-        File.AppendAllText(OutputFileName, text + Environment.NewLine);
+        _basicLoggerLogWrapper.Log(OutputFileName, text);
     }
 }

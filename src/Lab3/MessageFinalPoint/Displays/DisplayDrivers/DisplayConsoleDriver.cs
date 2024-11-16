@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.DisplayDrivers;
+namespace Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Displays.DisplayDrivers;
 
 public class DisplayConsoleDriver : IDisplayDriver
 {
@@ -16,8 +16,13 @@ public class DisplayConsoleDriver : IDisplayDriver
         Color = color;
     }
 
-    public void Print(string text)
+    public void Print(string? text)
     {
+        if (text == null)
+        {
+            return;
+        }
+
         Console.WriteLine(Crayon.Output.Rgb(Color.R, Color.G, Color.B).Text(text));
     }
 }

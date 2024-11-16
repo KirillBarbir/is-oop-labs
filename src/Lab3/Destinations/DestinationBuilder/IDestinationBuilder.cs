@@ -1,5 +1,7 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab3.Logger;
 using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint;
+using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Displays;
+using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Destinations;
 
@@ -7,7 +9,7 @@ public interface IDestinationBuilder
 {
     IDestinationBuilder WithLogger(ILogger logger);
 
-    IDestinationBuilder ImportanceFilter(Importance importance);
+    IDestinationBuilder WithImportanceFilter(Importance importance);
 
     UserDestination BuildUser(User user);
 

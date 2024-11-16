@@ -1,5 +1,7 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab3.Logger;
 using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint;
+using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Displays;
+using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Destinations;
 
@@ -15,7 +17,7 @@ public class DestinationBuilder : IDestinationBuilder
         return this;
     }
 
-    public IDestinationBuilder ImportanceFilter(Importance importance)
+    public IDestinationBuilder WithImportanceFilter(Importance importance)
     {
         Importance = importance;
         return this;

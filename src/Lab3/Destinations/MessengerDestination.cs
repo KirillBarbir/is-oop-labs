@@ -1,5 +1,5 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab3.Logger;
-using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint;
+using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Destinations;
 
@@ -14,12 +14,13 @@ public class MessengerDestination : BaseDestination
 
     public override void SendMessage(Message message)
     {
-        if (CheckImportance(message.Importance))
+        if (!CheckImportance(message.Importance))
         {
-            Logger.Log(message + "is not sent to " + ToString());
+            Logger.Log(message + "is not sent to " + Messenger);
             return;
         }
 
-        Messenger.ReceiveMessage(message);
+        Messenger.ReceiveMessage(message.ToString());
+        Logger.Log(message + "is sent to " + Messenger);
     }
 }

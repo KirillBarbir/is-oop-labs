@@ -14,6 +14,13 @@ public class GroupDestination : BaseDestination
 
     public override void SendMessage(Message message)
     {
+        if (!CheckImportance(message.Importance))
+        {
+            Logger.Log(message + "is not sent to " + Destinations);
+            return;
+        }
+
+        Logger.Log(message + "is sent to " + Destinations);
         foreach (BaseDestination destinations in Destinations)
         {
             destinations.SendMessage(message);
