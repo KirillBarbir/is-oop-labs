@@ -1,11 +1,12 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab3;
 using Itmo.ObjectOrientedProgramming.Lab3.Destinations;
+using Itmo.ObjectOrientedProgramming.Lab3.Destinations.Factories;
 using Itmo.ObjectOrientedProgramming.Lab3.Logger;
 using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint;
 using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Displays;
 using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Displays.DisplayDrivers;
 using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Messages;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace Lab3.Tests;
@@ -13,129 +14,135 @@ namespace Lab3.Tests;
 public class Lab3Tests
 {
     [Fact]
-    public void Test1()
+    public void UserReceiveMessageAsUnreadTest()
     {
         // arrange
-        var builder = new DestinationBuilder();
-        var user1 = new User("1");
-        var message1 = new Message("title", "body", Importance.VeryImportant);
-        UserDestination userDestination = builder.BuildUser(user1);
+        var factory = new StandartDestinationFactory();
+        var user = new User("user");
+        var importance = new Importance(5);
+        var message = new Message("title", "body", importance);
+        IDestination userDestination = factory.CreateUserDestination(user);
 
         // act
-        userDestination.SendMessage(message1);
+        userDestination.SendMessage(message);
 
         // assert
-        Assert.False(user1.CheckReadStatus(message1));
+        Assert.False(user.IsMessageRead(message));
     }
 
     [Fact]
-    public void Test2()
+    public void UserReceiveMessageAndReadTest()
     {
         // arrange
-        var builder = new DestinationBuilder();
-        var user1 = new User("1");
-        var message1 = new Message("title", "body", Importance.VeryImportant);
-        UserDestination userDestination = builder.BuildUser(user1);
+        var factory = new StandartDestinationFactory();
+        var user = new User("user");
+        var importance = new Importance(5);
+        var message = new Message("title", "body", importance);
+        IDestination userDestination = factory.CreateUserDestination(user);
 
         // act
-        userDestination.SendMessage(message1);
-        user1.MarkMessageAsRead(message1);
+        userDestination.SendMessage(message);
+        user.ReadMessage(message);
 
         // assert
-        Assert.True(user1.CheckReadStatus(message1));
+        Assert.True(user.IsMessageRead(message));
     }
 
     [Fact]
-    public void Test3()
+    public void UserReadMessageTwiceTest()
     {
         // arrange
-        var builder = new DestinationBuilder();
-        var user1 = new User("1");
-        var message1 = new Message("title", "body", Importance.VeryImportant);
-        UserDestination userDestination = builder.BuildUser(user1);
+        var factory = new StandartDestinationFactory();
+        var user = new User("user");
+        var importance = new Importance(5);
+        var message = new Message("title", "body", importance);
+        IDestination userDestination = factory.CreateUserDestination(user);
 
         // act
-        userDestination.SendMessage(message1);
-        user1.MarkMessageAsRead(message1);
-        bool done = user1.MarkMessageAsRead(message1);
+        userDestination.SendMessage(message);
+        user.ReadMessage(message);
+        ResultType result = user.ReadMessage(message);
 
         // assert
-        Assert.False(done);
+        Assert.Equal(ResultType.Failure, result);
     }
 
     [Fact]
-    public void Test4()
+    public void ImportanceFilterTest()
     {
         // arrange
-        var builder = new DestinationBuilder();
-        var mock = new Mock<IDisplayDriver>();
-        var display = new Display(mock.Object);
-        DisplayDestination destination = builder.WithImportanceFilter(Importance.Important)
-            .BuildDisplay(display);
-        var message1 = new Message("title", "body", Importance.NotImportant);
+        var importance = new Importance(5);
+        var factory = new FilteredDestinationFactory(importance);
+        IDisplayDriver mock = Substitute.For<IDisplayDriver>();
+        var display = new Display(mock);
+        IDestination destination = factory.CreateDisplayDestination(display);
+        importance.SetImportanceLevel(1);
+        var message = new Message("title", "body", importance);
 
         // act
-        destination.SendMessage(message1);
+        destination.SendMessage(message);
 
         // assert
-        mock.Verify(t => t.Print(message1.ToString()), Times.Never());
+        mock.DidNotReceive().Print(message.ToString());
     }
 
     [Fact]
-    public void Test5()
+    public void LoggingTest()
     {
         // arrange
-        var builder = new DestinationBuilder();
-        var mock = new Mock<IBasicLoggerLogWrapper>();
-        var basicLogger = new BasicLogger("lab-3logs", mock.Object);
-        var messenger = new Messenger(new MessengerPrintWrapper());
-        MessengerDestination destination = builder.WithLogger(basicLogger)
-            .BuildMessenger(messenger);
-        var message1 = new Message("title", "body", Importance.NotImportant);
+        IFileLoggerLogWrapper mock = Substitute.For<IFileLoggerLogWrapper>();
+        var logger = new FileLogger("lab-3logs", mock);
+        var factory = new LoggedDestinationFactory(logger);
+        var messenger = new Messenger();
+        var importance = new Importance(5);
+        var message = new Message("title", "body", importance);
+        IDestination messengerDestination = factory.CreateMessengerDestination(messenger);
 
         // act
-        destination.SendMessage(message1);
+        messengerDestination.SendMessage(message);
 
         // assert
-        mock.Verify(t => t.Log("lab-3logs", message1 + "is sent to " + messenger), Times.Once());
+        mock.Received().Log("lab-3logs", message + "is sent");
     }
 
     [Fact]
-    public void Test6()
+    public void MessengerTest()
     {
         // arrange
-        var builder = new DestinationBuilder();
-        var mock = new Mock<IMessengerPrintWrapper>();
-        var messenger = new Messenger(mock.Object);
-        MessengerDestination destination = builder.WithImportanceFilter(Importance.Important)
-            .BuildMessenger(messenger);
-        var message1 = new Message("title", "body", Importance.Important);
+        var factory = new StandartDestinationFactory();
+        IMessengerPrintWrapper mock = Substitute.For<IMessengerPrintWrapper>();
+        var messenger = new Messenger(mock);
+        var importance = new Importance(5);
+        var message = new Message("title", "body", importance);
+        IDestination messengerDestination = factory.CreateMessengerDestination(messenger);
 
         // act
-        destination.SendMessage(message1);
+        messengerDestination.SendMessage(message);
 
         // assert
-        mock.Verify(t => t.Print($"Messenger: {message1}"), Times.Once());
+        mock.Received().Print($"Messenger: {message}");
     }
 
     [Fact]
-    public void Test7()
+    public void TwoDestinationsFilterTest()
     {
         // arrange
-        var builder = new DestinationBuilder();
-        var user1 = new User("1");
-        var message1 = new Message("title", "body", Importance.Important);
-        UserDestination userDestination1 = builder.WithImportanceFilter(Importance.NotImportant).BuildUser(user1);
-        UserDestination userDestination2 = builder.WithImportanceFilter(Importance.VeryImportant).BuildUser(user1);
-        var destinations = new List<BaseDestination>();
-        destinations.Add(userDestination1);
-        destinations.Add(userDestination2);
-        var topic = new Topic("topic", destinations);
+        var importance = new Importance(5);
+        var factory = new FilteredDestinationFactory(importance);
+        var user = new User("user");
+        var message = new Message("title", "body", importance);
+        IDestination userDestination1 = factory.CreateUserDestination(user);
+        user.ReadMessage(message);
+        importance.SetImportanceLevel(7);
+        factory.SetImportanceFilter(importance);
+        IDestination userDestination2 = factory.CreateUserDestination(user);
+        var destinations = new List<IDestination> { userDestination1, userDestination2 };
+        var topic = new Topic("TOPIC", destinations);
 
         // act
-        topic.SendMessage(new Message("title", "body", Importance.Important));
+        topic.SendMessage(message);
 
         // assert
-        Assert.Equal(1, user1.GetMessageCount());
+        Assert.Equal(1, user.MessageReceived(message));
     }
 }

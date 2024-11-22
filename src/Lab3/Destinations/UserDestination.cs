@@ -1,26 +1,26 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab3.Logger;
-using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint;
+﻿using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Destinations;
 
-public class UserDestination : BaseDestination
+public class UserDestination : IDestination
 {
-    public UserDestination(Importance importance, ILogger logger, User user) : base(importance, logger)
+    public UserDestination(User user)
     {
-        User = user;
+        _user = user;
     }
 
-    public User User { get; }
+    private readonly User _user;
 
-    public override void SendMessage(Message message)
+    public void SendMessage(Message message)
     {
-        if (!CheckImportance(message.Importance))
+        /*if (!CheckImportance(message.Importance))
         {
             Logger.Log(message + "is not sent to " + User);
             return;
-        }
+        }*/
 
-        User.ReceiveMessage(message);
-        Logger.Log(message + "is sent to " + User);
+        _user.ReceiveMessage(message);
+
+        // Logger.Log(message + "is sent to " + User);
     }
 }

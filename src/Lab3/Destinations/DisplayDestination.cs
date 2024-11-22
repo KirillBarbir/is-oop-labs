@@ -1,26 +1,26 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab3.Logger;
-using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Displays;
+﻿using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Displays;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Destinations;
 
-public class DisplayDestination : BaseDestination
+public class DisplayDestination : IDestination
 {
-    public DisplayDestination(Importance importance, ILogger logger, Display display) : base(importance, logger)
+    public DisplayDestination(Display display)
     {
-        Display = display;
+        _display = display;
     }
 
-    public Display Display { get; }
+    private readonly Display _display;
 
-    public override void SendMessage(Message message)
+    public void SendMessage(Message message)
     {
-        if (!CheckImportance(message.Importance))
+       /* if (!CheckImportance(message.Importance))
         {
             Logger.Log(message + "is not sent to " + Display);
             return;
-        }
+        }*/
 
-        Display.ReceiveMessage(message.ToString());
-        Logger.Log(message + "is sent to " + Display);
+        _display.ReceiveMessage(message.ToString());
+
+        // Logger.Log(message + "is sent to " + Display);
     }
 }

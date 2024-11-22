@@ -1,6 +1,6 @@
 ﻿namespace Itmo.ObjectOrientedProgramming.Lab3.Logger;
 
-public class BasicLoggerLogWrapper : IBasicLoggerLogWrapper
+public class FileLoggerLogWrapper : IFileLoggerLogWrapper
 {
     public void Log(string outputFileName, string text)
     {

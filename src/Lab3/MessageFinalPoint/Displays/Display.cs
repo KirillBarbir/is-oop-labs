@@ -7,22 +7,19 @@ public class Display
 {
     public Display(IDisplayDriver driver)
     {
-        Driver = driver;
-        Driver.SetColor(Color);
+        _driver = driver;
     }
 
-    public Color Color { get; }
-
-    public IDisplayDriver Driver { get; }
+    private readonly IDisplayDriver _driver;
 
     public void SetColor(Color color)
     {
-        Driver.SetColor(color);
+        _driver.SetColor(color);
     }
 
     public void ReceiveMessage(string text)
     {
-        Driver.Clear();
-        Driver.Print(text);
+        _driver.Clear();
+        _driver.Print(text);
     }
 }

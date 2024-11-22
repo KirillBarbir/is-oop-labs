@@ -4,19 +4,19 @@ namespace Itmo.ObjectOrientedProgramming.Lab3;
 
 public class Topic
 {
-    public Topic(string name, ICollection<BaseDestination> destinations)
+    public Topic(string name, ICollection<IDestination> destinations)
     {
         Name = name;
-        Destinations = destinations;
+        _destinations = destinations;
     }
 
     public string Name { get; }
 
-    private ICollection<BaseDestination> Destinations { get; }
+    private readonly ICollection<IDestination> _destinations;
 
     public void SendMessage(Message message)
     {
-        foreach (BaseDestination destination in Destinations)
+        foreach (IDestination destination in _destinations)
         {
             destination.SendMessage(message);
         }

@@ -2,7 +2,11 @@
 
 public class Messenger
 {
-    private readonly IMessengerPrintWrapper _messengerPrintWrapper;
+    private readonly IMessengerPrintWrapper _messengerPrintWrapper = new MessengerPrintWrapper();
+
+    public Messenger()
+    {
+    }
 
     public Messenger(IMessengerPrintWrapper messengerPrintWrapper)
     {

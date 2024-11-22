@@ -2,7 +2,14 @@
 
 public class User
 {
-    private Dictionary<Message, bool> Messages { get; } = [];
+    public enum MessageStatus
+    {
+        Read,
+        Unread,
+    }
+
+    private readonly Dictionary<Message, MessageStatus> _messages = [];
+    private readonly Dictionary<Message, int> _messageReceiveAmount = [];
 
     public User(string name)
     {
@@ -13,33 +20,41 @@ public class User
 
     public void ReceiveMessage(Message message)
     {
-        Messages[message] = false;
-    }
-
-    public bool MarkMessageAsRead(Message message)
-    {
-        if (!Messages.TryGetValue(message, out bool read))
+        _messages.TryAdd(message, MessageStatus.Unread);
+        if (_messageReceiveAmount.ContainsKey(message))
         {
-            return false;
+            _messageReceiveAmount[message]++;
+            return;
         }
 
-        if (read)
+        _messageReceiveAmount.TryAdd(message, 1);
+    }
+
+    public ResultType ReadMessage(Message message)
+    {
+        if (!_messages.TryGetValue(message, out MessageStatus read))
         {
-            return false;
+            return ResultType.Failure;
         }
 
-        Messages[message] = true;
-        return true;
+        if (read == MessageStatus.Read)
+        {
+            return ResultType.Failure;
+        }
+
+        _messages[message] = MessageStatus.Read;
+        return ResultType.Success;
     }
 
-    public bool CheckReadStatus(Message message)
+    public bool IsMessageRead(Message message)
     {
-        Messages.TryGetValue(message, out bool read);
-        return read;
+        _messages.TryGetValue(message, out MessageStatus read);
+        return read == MessageStatus.Read;
     }
 
-    public int GetMessageCount()
+    public int MessageReceived(Message message)
     {
-        return Messages.Count;
+        _messageReceiveAmount.TryGetValue(message, out int amount);
+        return amount;
     }
 }
