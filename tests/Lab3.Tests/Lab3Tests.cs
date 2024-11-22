@@ -90,9 +90,8 @@ public class Lab3Tests
     public void LoggingTest()
     {
         // arrange
-        IFileLoggerLogWrapper mock = Substitute.For<IFileLoggerLogWrapper>();
-        var logger = new FileLogger("lab-3logs", mock);
-        var factory = new LoggedDestinationFactory(logger);
+        ILogger mock = Substitute.For<ILogger>();
+        var factory = new LoggedDestinationFactory(mock);
         var messenger = new Messenger();
         var importance = new Importance(5);
         var message = new Message("title", "body", importance);
@@ -102,7 +101,7 @@ public class Lab3Tests
         messengerDestination.SendMessage(message);
 
         // assert
-        mock.Received().Log("lab-3logs", message + "is sent");
+        mock.Received().Log(message + "is sent");
     }
 
     [Fact]

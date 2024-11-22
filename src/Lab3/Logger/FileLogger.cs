@@ -2,18 +2,15 @@
 
 public class FileLogger : ILogger
 {
-    private readonly IFileLoggerLogWrapper _fileLoggerLogWrapper;
-
-    public FileLogger(string outputFileName, IFileLoggerLogWrapper fileLoggerLogWrapper)
+    public FileLogger(string outputFileName)
     {
-        OutputFileName = outputFileName;
-        _fileLoggerLogWrapper = fileLoggerLogWrapper;
+        _outputFileName = outputFileName;
     }
 
-    public string OutputFileName { get; }
+    private readonly string _outputFileName;
 
     public void Log(string text)
     {
-        _fileLoggerLogWrapper.Log(OutputFileName, text);
+        File.AppendAllText(_outputFileName, text + Environment.NewLine);
     }
 }
