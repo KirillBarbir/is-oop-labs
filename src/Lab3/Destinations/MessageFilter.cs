@@ -2,14 +2,14 @@
 
 public class MessageFilter : IDestination
 {
+    private readonly IDestination _destination;
+    private readonly Importance _minimumImportance;
+
     public MessageFilter(IDestination destination, Importance minimumImportance)
     {
         _minimumImportance = minimumImportance;
         _destination = destination;
     }
-
-    private readonly IDestination _destination;
-    private readonly Importance _minimumImportance;
 
     public void SendMessage(Message message)
     {

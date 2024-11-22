@@ -2,12 +2,12 @@
 
 public class FileLogger : ILogger
 {
+    private readonly string _outputFileName;
+
     public FileLogger(string outputFileName)
     {
         _outputFileName = outputFileName;
     }
-
-    private readonly string _outputFileName;
 
     public void Log(string text)
     {

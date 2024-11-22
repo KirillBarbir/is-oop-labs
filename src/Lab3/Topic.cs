@@ -4,15 +4,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab3;
 
 public class Topic
 {
+    public string Name { get; }
+
+    private readonly ICollection<IDestination> _destinations;
+
     public Topic(string name, ICollection<IDestination> destinations)
     {
         Name = name;
         _destinations = destinations;
     }
-
-    public string Name { get; }
-
-    private readonly ICollection<IDestination> _destinations;
 
     public void SendMessage(Message message)
     {

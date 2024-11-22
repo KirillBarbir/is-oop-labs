@@ -1,4 +1,4 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Messages;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Messengers;
 
 public interface IMessengerPrintWrapper
 {

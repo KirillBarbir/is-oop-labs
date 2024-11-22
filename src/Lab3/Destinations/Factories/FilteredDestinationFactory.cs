@@ -1,6 +1,6 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint;
 using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Displays;
-using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Messages;
+using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Messengers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Destinations.Factories;
 

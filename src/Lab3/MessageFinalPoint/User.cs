@@ -2,12 +2,6 @@
 
 public class User
 {
-    public enum MessageStatus
-    {
-        Read,
-        Unread,
-    }
-
     private readonly Dictionary<Message, MessageStatus> _messages = [];
     private readonly Dictionary<Message, int> _messageReceiveAmount = [];
 

@@ -5,12 +5,12 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Displays;
 
 public class Display
 {
+    private readonly IDisplayDriver _driver;
+
     public Display(IDisplayDriver driver)
     {
         _driver = driver;
     }
-
-    private readonly IDisplayDriver _driver;
 
     public void SetColor(Color color)
     {

@@ -5,7 +5,7 @@ using Itmo.ObjectOrientedProgramming.Lab3.Logger;
 using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint;
 using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Displays;
 using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Displays.DisplayDrivers;
-using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Messages;
+using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Messengers;
 using NSubstitute;
 using Xunit;
 
@@ -71,13 +71,13 @@ public class Lab3Tests
     public void ImportanceFilterTest()
     {
         // arrange
-        var importance = new Importance(5);
-        var factory = new FilteredDestinationFactory(importance);
+        var importance1 = new Importance(5);
+        var factory = new FilteredDestinationFactory(importance1);
         IDisplayDriver mock = Substitute.For<IDisplayDriver>();
         var display = new Display(mock);
         IDestination destination = factory.CreateDisplayDestination(display);
-        importance.SetImportanceLevel(1);
-        var message = new Message("title", "body", importance);
+        var importance2 = new Importance(1);
+        var message = new Message("title", "body", importance2);
 
         // act
         destination.SendMessage(message);
@@ -126,14 +126,14 @@ public class Lab3Tests
     public void TwoDestinationsFilterTest()
     {
         // arrange
-        var importance = new Importance(5);
-        var factory = new FilteredDestinationFactory(importance);
+        var importance1 = new Importance(5);
+        var factory = new FilteredDestinationFactory(importance1);
         var user = new User("user");
-        var message = new Message("title", "body", importance);
+        var message = new Message("title", "body", importance1);
         IDestination userDestination1 = factory.CreateUserDestination(user);
         user.ReadMessage(message);
-        importance.SetImportanceLevel(7);
-        factory.SetImportanceFilter(importance);
+        var importance2 = new Importance(7);
+        factory.SetImportanceFilter(importance2);
         IDestination userDestination2 = factory.CreateUserDestination(user);
         var destinations = new List<IDestination> { userDestination1, userDestination2 };
         var topic = new Topic("TOPIC", destinations);
