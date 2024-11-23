@@ -18,4 +18,9 @@ public class DestinationLogger : IDestination
         _destination.SendMessage(message);
         _logger.Log(message + "is sent");
     }
+
+    public DestinationLogger Clone()
+    {
+        return new DestinationLogger(_destination, _logger);
+    }
 }

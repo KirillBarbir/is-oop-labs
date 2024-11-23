@@ -16,4 +16,9 @@ public class GroupDestination : IDestination
             destinations.SendMessage(message);
         }
     }
+
+    public GroupDestination Clone()
+    {
+        return new GroupDestination(_destinations);
+    }
 }

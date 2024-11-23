@@ -4,7 +4,7 @@ using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Messengers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Destinations.Factories;
 
-public class StandartDestinationFactory : IDestinationFactory
+public class StandartDestinationFactory
 {
     public IDestination CreateUserDestination(User user)
     {

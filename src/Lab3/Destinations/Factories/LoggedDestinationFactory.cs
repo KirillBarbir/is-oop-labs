@@ -5,7 +5,7 @@ using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Messengers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Destinations.Factories;
 
-public class LoggedDestinationFactory : IDestinationFactory
+public class LoggedDestinationFactory
 {
     private readonly ILogger _logger;
 

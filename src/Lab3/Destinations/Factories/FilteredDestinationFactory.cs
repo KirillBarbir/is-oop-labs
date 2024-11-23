@@ -4,7 +4,7 @@ using Itmo.ObjectOrientedProgramming.Lab3.MessageFinalPoint.Messengers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Destinations.Factories;
 
-public class FilteredDestinationFactory : IDestinationFactory
+public class FilteredDestinationFactory
 {
     private Importance _importanceFilter;
 
