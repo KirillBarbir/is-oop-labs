@@ -19,8 +19,8 @@ public class MessageFilter : IDestination
         }
     }
 
-    public MessageFilter Clone()
+    public IDestination Clone()
     {
-        return new MessageFilter(_destination, _minimumImportance);
+        return new MessageFilter(_destination.Clone(), _minimumImportance);
     }
 }

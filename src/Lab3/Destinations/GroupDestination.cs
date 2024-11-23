@@ -17,8 +17,14 @@ public class GroupDestination : IDestination
         }
     }
 
-    public GroupDestination Clone()
+    public IDestination Clone()
     {
-        return new GroupDestination(_destinations);
+        var clones = new List<IDestination>();
+        foreach (IDestination destinations in _destinations)
+        {
+            clones.Add(destinations.Clone());
+        }
+
+        return new GroupDestination(clones);
     }
 }

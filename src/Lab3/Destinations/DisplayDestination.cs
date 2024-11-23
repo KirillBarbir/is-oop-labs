@@ -16,7 +16,7 @@ public class DisplayDestination : IDestination
         _display.ReceiveMessage(message.ToString());
     }
 
-    public DisplayDestination Clone()
+    public IDestination Clone()
     {
         return new DisplayDestination(_display);
     }

@@ -16,7 +16,7 @@ public class UserDestination : IDestination
         _user.ReceiveMessage(message);
     }
 
-    public UserDestination Clone()
+    public IDestination Clone()
     {
         return new UserDestination(_user);
     }

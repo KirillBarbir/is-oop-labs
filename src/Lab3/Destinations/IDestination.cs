@@ -3,4 +3,6 @@
 public interface IDestination
 {
     public void SendMessage(Message message);
+
+    public IDestination Clone();
 }

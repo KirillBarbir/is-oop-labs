@@ -16,7 +16,7 @@ public class MessengerDestination : IDestination
         _messenger.ReceiveMessage(message.ToString());
     }
 
-    public MessengerDestination Clone()
+    public IDestination Clone()
     {
         return new MessengerDestination(_messenger);
     }
