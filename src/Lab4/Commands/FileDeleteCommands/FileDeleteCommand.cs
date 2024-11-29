@@ -1,17 +1,24 @@
 ﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.FileDeleteCommands;
 
-public record FileDeleteCommand(string Path, IFileDeleteExecutor? Executor) : ICommand // TODO: change to class
+public record FileDeleteCommand : ICommand
 {
-    // public string Path { get; set; }
+    private readonly string _path;
 
-    // public IFileDeleteExecutor Executor { get; set; }
+    private readonly IFileDeleteExecutor? _executor;
+
+    public FileDeleteCommand(string path, IFileDeleteExecutor? executor)
+    {
+        _path = path;
+        _executor = executor;
+    }
+
     public void Execute()
     {
-        if (Executor is null)
+        if (_executor is null)
         {
             return;
         }
 
-        Executor.DeleteFile(Path);
+        _executor.DeleteFile(_path);
     }
 }

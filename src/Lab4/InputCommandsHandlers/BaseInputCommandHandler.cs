@@ -8,7 +8,6 @@ public abstract class BaseInputCommandHandler : IInputCommandHandler
 
     public IInputCommandHandler AddNext(IInputCommandHandler nextCommandHandler)
     {
-        Next = nextCommandHandler;
         if (Next is null)
         {
             Next = nextCommandHandler;

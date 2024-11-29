@@ -2,5 +2,5 @@
 
 public interface IFileDeleteExecutorDecider
 {
-    IFileDeleteExecutor? Decide(string mode);
+    IFileDeleteExecutor? Decide(string? mode);
 }

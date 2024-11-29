@@ -1,6 +1,6 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands;
 
-namespace Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FileInputCommands;
+namespace Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FileInputCommandHandlers;
 
 public class FileInputCommandsHandler : BaseInputCommandHandler
 {

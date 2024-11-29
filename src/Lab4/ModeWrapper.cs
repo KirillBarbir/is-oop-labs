@@ -2,9 +2,9 @@
 
 public class ModeWrapper
 {
-    public string Mode { get; private set; } = string.Empty;
+    public string? Mode { get; private set; }
 
-    public void SetMode(string mode)
+    public void SetMode(string? mode)
     {
         Mode = mode;
     }

@@ -4,6 +4,11 @@ public class LocalFileCopyExecutor : IFileCopyExecutor
 {
     public void FileCopy(string sourcePath, string destinationPath)
     {
-        File.Copy(sourcePath, destinationPath); // TODO: validate input or find smn to do it
+        if (File.Exists(destinationPath) && !File.Exists(sourcePath))
+        {
+            return;
+        }
+
+        File.Copy(sourcePath, destinationPath);
     }
 }

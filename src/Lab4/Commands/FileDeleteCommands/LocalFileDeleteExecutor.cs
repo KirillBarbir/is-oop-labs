@@ -4,6 +4,11 @@ public class LocalFileDeleteExecutor : IFileDeleteExecutor
 {
     public void DeleteFile(string filePath)
     {
-        File.Delete(filePath); // TODO: validate input or find smn to do it
+        if (!File.Exists(filePath))
+        {
+            return;
+        }
+
+        File.Delete(filePath);
     }
 }

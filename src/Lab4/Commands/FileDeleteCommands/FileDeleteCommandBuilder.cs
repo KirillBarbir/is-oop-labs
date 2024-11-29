@@ -2,17 +2,12 @@
 
 public class FileDeleteCommandBuilder : BasicCommandBuilder
 {
-    private readonly IFileDeleteExecutorDecider _fileDeleteExecutorDecider;
+    private IFileDeleteExecutorDecider? _fileDeleteExecutorDecider;
     private string? _path;
-
-    public FileDeleteCommandBuilder(IFileDeleteExecutorDecider fileDeleteExecutorDecider)
-    {
-        _fileDeleteExecutorDecider = fileDeleteExecutorDecider;
-    }
 
     public override ICommand? Build()
     {
-        if (_path is null || Mode is null)
+        if (_path is null || Mode is null || _fileDeleteExecutorDecider == null)
         {
             return null;
         }
@@ -23,6 +18,12 @@ public class FileDeleteCommandBuilder : BasicCommandBuilder
     public FileDeleteCommandBuilder WithFilePath(string path)
     {
         _path = path;
+        return this;
+    }
+
+    public FileDeleteCommandBuilder WithDecider(IFileDeleteExecutorDecider decider)
+    {
+        _fileDeleteExecutorDecider = decider;
         return this;
     }
 }

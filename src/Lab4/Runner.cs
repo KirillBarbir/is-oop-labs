@@ -9,7 +9,7 @@ public class Runner
 
     private readonly ModeWrapper _mode = new ModeWrapper();
 
-    private readonly AbsolutePath? _absolutePath = new AbsolutePath("C:\\gitprojects\\KirillBarbir\\src\\Lab4\\Lab4.csproj"); // TODO: fix
+    private readonly AbsolutePath _absolutePath = new AbsolutePath(); // TODO: support different absolute path logic
 
     public Runner(IInputCommandHandler handler)
     {
@@ -22,7 +22,7 @@ public class Runner
         while (request.MoveNext())
         {
             ICommandBuilder? nextBuilder = _handler.HandleCommand(request);
-            if (nextBuilder is not null && _mode is not null && _absolutePath is not null)
+            if (nextBuilder is not null)
             {
                 ICommand? command = nextBuilder.WithMode(_mode).WithConnectedPath(_absolutePath).Build();
                 if (command is not null)
