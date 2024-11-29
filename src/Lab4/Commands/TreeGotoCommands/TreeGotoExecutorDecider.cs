@@ -1,6 +1,6 @@
 ﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeGotoCommands;
 
-public class TreeGotoDecider : ITreeGotoExecutorDecider
+public class TreeGotoExecutorDecider : ITreeGotoExecutorDecider
 {
     public ITreeGotoExecutor? Decide(string? mode)
     {

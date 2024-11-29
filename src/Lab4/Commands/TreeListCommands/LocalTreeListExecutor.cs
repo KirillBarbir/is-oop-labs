@@ -17,7 +17,6 @@ public class LocalTreeListExecutor : ITreeListExecutor
 
         IElement? element = factory.CreateElement(path);
         var visitor = new ConsoleVisitor(depth);
-
         element?.Accept(visitor);
     }
 }

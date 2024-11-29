@@ -14,7 +14,7 @@ public class ConsoleVisitor : IVisitor
 
     public void Visit(FileElement fileElement)
     {
-        IndentOutput("@" + fileElement.Name);
+        IndentOutput("@|" + fileElement.Name);
     }
 
     public void Visit(DirectoryElement directoryElement)
@@ -45,9 +45,9 @@ public class ConsoleVisitor : IVisitor
         string indent = string.Empty;
         for (int i = 0; i < _depth; i++)
         {
-            indent += "_";
+            indent += "__";
         }
 
-        Console.Write(indent + text);
+        Console.WriteLine(indent + text);
     }
 }

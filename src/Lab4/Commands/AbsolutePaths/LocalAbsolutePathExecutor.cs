@@ -16,11 +16,11 @@ public class LocalAbsolutePathExecutor : IAbsolutePathExecutor
             return null;
         }
 
-        return _path.StartsWith(path) ? path : _path + path;
+        return path.StartsWith(_path) ? path : _path + path;
     }
 
     public void SetPath(string? path)
     {
-        _path = CreateAbsolutePath(path);
+        _path = path;
     }
 }

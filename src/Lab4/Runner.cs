@@ -18,8 +18,13 @@ public class Runner
         _absolutePath = new AbsolutePath(absolutePathDecider);
     }
 
-    public ReturnType Run(IEnumerable<string> args)
+    public ReturnType Run(IEnumerable<string>? args)
     {
+        if (args is null)
+        {
+            return ReturnType.Failure;
+        }
+
         using IEnumerator<string> request = args.GetEnumerator();
         while (request.MoveNext())
         {
@@ -39,8 +44,7 @@ public class Runner
             }
             else
             {
-                Console.WriteLine("I give up");
-                return ReturnType.Failure;
+                break;
             }
         }
 

@@ -4,12 +4,18 @@ public class LocalFileMoveExecutor : IFileMoveExecutor
 {
     public void FileMove(string sourcePath, string destinationPath)
     {
-        if (File.Exists(destinationPath) && !File.Exists(sourcePath))
+        if (!Directory.Exists(destinationPath) || !File.Exists(sourcePath))
         {
             return;
         }
 
-        File.Copy(sourcePath, destinationPath);
+        string[] splitSourcePath = sourcePath.Split('\\');
+        if (File.Exists(destinationPath + "\\" + splitSourcePath[^1]))
+        {
+            return;
+        }
+
+        File.Copy(sourcePath, destinationPath + "\\" + splitSourcePath[^1]);
         File.Delete(sourcePath);
     }
 }

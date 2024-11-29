@@ -9,9 +9,9 @@ public class LocalFileRenameExecutor : IFileRenameExecutor
             return;
         }
 
-        string[] array = sourcePath.Split('\\');
-        array[^1] = name;
-        string newPath = string.Join('\\', array);
+        string[] splitSourcePath = sourcePath.Split('\\');
+        splitSourcePath[^1] = name;
+        string newPath = string.Join('\\', splitSourcePath);
 
         if (File.Exists(newPath))
         {

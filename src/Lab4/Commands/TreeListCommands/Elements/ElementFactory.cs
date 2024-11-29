@@ -14,7 +14,7 @@ public class ElementFactory
         {
             string name = Path.GetFileName(path);
 
-            using IEnumerator<string> paths = Directory.EnumerateDirectories(path).GetEnumerator();
+            using IEnumerator<string> paths = Directory.EnumerateFileSystemEntries(path).GetEnumerator();
             var elements = new List<IElement?>();
             elements.Add(CreateElement(paths.Current));
             while (paths.MoveNext())

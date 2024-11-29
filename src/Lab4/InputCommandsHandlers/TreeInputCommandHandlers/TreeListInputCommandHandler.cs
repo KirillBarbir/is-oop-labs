@@ -19,13 +19,8 @@ public class TreeListInputCommandHandler : BaseInputCommandHandler
             return Next?.HandleCommand(request);
         }
 
-        if (request.MoveNext() is false)
-        {
-            return null;
-        }
-
         int depth = 1;
-        if (request.Current is "-d" && request.MoveNext())
+        if (request.MoveNext() && request.Current is "-d" && request.MoveNext())
         {
             depth = int.Parse(request.Current);
         }
