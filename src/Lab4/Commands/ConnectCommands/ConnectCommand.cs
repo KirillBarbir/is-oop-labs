@@ -1,4 +1,6 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.ConnectCommands;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.AbsolutePaths;
+
+namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.ConnectCommands;
 
 public class ConnectCommand : ICommand
 {
@@ -20,6 +22,7 @@ public class ConnectCommand : ICommand
 
     public void Execute()
     {
+        _absolutePath.ChangeMode(_newMode);
         _absolutePath.SetPath(_newPath);
         _modeWrapper.SetMode(_newMode);
     }

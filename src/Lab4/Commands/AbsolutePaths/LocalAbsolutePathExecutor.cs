@@ -1,13 +1,8 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab4;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.AbsolutePaths;
 
-public class AbsolutePath
+public class LocalAbsolutePathExecutor : IAbsolutePathExecutor
 {
     private string? _path;
-
-    public AbsolutePath(string? path = null)
-    {
-        _path = path;
-    }
 
     public string? CreateAbsolutePath(string? path = null)
     {
@@ -21,10 +16,10 @@ public class AbsolutePath
             return null;
         }
 
-        return _path.StartsWith(path) ? path : _path + path; // TODO: inspect
+        return _path.StartsWith(path) ? path : _path + path;
     }
 
-    public void SetPath(string? path) // TODO: inspect
+    public void SetPath(string? path)
     {
         _path = CreateAbsolutePath(path);
     }

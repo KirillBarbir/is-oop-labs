@@ -1,4 +1,6 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.DisconnectCommands;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.AbsolutePaths;
+
+namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.DisconnectCommands;
 
 public class DisconnectCommand : ICommand
 {

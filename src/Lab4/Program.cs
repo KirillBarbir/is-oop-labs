@@ -1,4 +1,5 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.FileDeleteCommands;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.AbsolutePaths;
+using Itmo.ObjectOrientedProgramming.Lab4.Commands.FileDeleteCommands;
 using Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers;
 using Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FileInputCommandHandlers;
 
@@ -11,7 +12,7 @@ public class Program
         var innerHandler = new FileDeleteInputCommandHandler(new FileDeleteExecutorDecider());
         var fileHandler = new FileInputCommandsHandler(innerHandler);
         var connectHandler = new ConnectInputCommandHandler();
-        var runner = new Runner(fileHandler.AddNext(connectHandler));
+        var runner = new Runner(fileHandler.AddNext(connectHandler), new AbsolutePathDecider());
         runner.Run(args);
     }
 }

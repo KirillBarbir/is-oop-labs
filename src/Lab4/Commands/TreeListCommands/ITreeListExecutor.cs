@@ -1,4 +1,6 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.AbsolutePaths;
+
+namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands;
 
 public interface ITreeListExecutor
 {

@@ -1,4 +1,6 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeGotoCommands;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.AbsolutePaths;
+
+namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeGotoCommands;
 
 public class LocalTreeGotoExecutor : ITreeGotoExecutor
 {

@@ -1,4 +1,5 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands;
+using Itmo.ObjectOrientedProgramming.Lab4.Commands.AbsolutePaths;
 using Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4;
@@ -9,11 +10,12 @@ public class Runner
 
     private readonly ModeWrapper _mode = new ModeWrapper();
 
-    private readonly AbsolutePath _absolutePath = new AbsolutePath(); // TODO: support different absolute path logic
+    private readonly AbsolutePath _absolutePath;
 
-    public Runner(IInputCommandHandler handler)
+    public Runner(IInputCommandHandler handler, IAbsolutePathDecider absolutePathDecider)
     {
         _handler = handler;
+        _absolutePath = new AbsolutePath(absolutePathDecider);
     }
 
     public ReturnType Run(IEnumerable<string> args)
