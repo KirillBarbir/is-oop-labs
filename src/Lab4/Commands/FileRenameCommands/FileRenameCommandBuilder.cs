@@ -8,12 +8,12 @@ public class FileRenameCommandBuilder : BasicCommandBuilder
 
     public override ICommand? Build()
     {
-        if (_sourcePath is null || _name is null || Mode is null || _fileRenameExecutorDecider is null)
+        if (AbsolutePath is null || _name is null || Mode is null || _fileRenameExecutorDecider is null)
         {
             return null;
         }
 
-        return new FileRenameCommand(_sourcePath, _name, _fileRenameExecutorDecider.Decide(Mode.Mode));
+        return new FileRenameCommand(AbsolutePath.CreateAbsolutePath(_sourcePath), _name, _fileRenameExecutorDecider.Decide(Mode.Mode));
     }
 
     public FileRenameCommandBuilder WithSourcePath(string sourcePath)

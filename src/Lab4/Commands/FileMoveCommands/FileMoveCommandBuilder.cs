@@ -8,12 +8,15 @@ public class FileMoveCommandBuilder : BasicCommandBuilder
 
     public override ICommand? Build()
     {
-        if (_sourcePath is null || _destinationPath is null || Mode is null || _fileMoveExecutorDecider is null)
+        if (AbsolutePath is null || Mode is null || _fileMoveExecutorDecider is null)
         {
             return null;
         }
 
-        return new FileMoveCommand(_sourcePath, _destinationPath, _fileMoveExecutorDecider.Decide(Mode.Mode));
+        return new FileMoveCommand(
+            AbsolutePath.CreateAbsolutePath(_sourcePath),
+            AbsolutePath.CreateAbsolutePath(_destinationPath),
+            _fileMoveExecutorDecider.Decide(Mode.Mode));
     }
 
     public FileMoveCommandBuilder WithSourcePath(string sourcePath)

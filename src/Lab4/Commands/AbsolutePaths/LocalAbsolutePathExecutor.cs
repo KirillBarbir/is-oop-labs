@@ -6,7 +6,7 @@ public class LocalAbsolutePathExecutor : IAbsolutePathExecutor
 
     public string? CreateAbsolutePath(string? path = null)
     {
-        if (path == null)
+        if (path is null)
         {
             return _path;
         }
@@ -16,7 +16,7 @@ public class LocalAbsolutePathExecutor : IAbsolutePathExecutor
             return null;
         }
 
-        return path.StartsWith(_path) ? path : _path + path;
+        return path.StartsWith(_path) ? path : _path + "\\" + path;
     }
 
     public void SetPath(string? path)

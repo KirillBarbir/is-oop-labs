@@ -6,7 +6,6 @@ public class LocalTreeGotoExecutor : ITreeGotoExecutor
 {
     public void TreeGoto(AbsolutePath path, string newPath)
     {
-        string? newAbsolutePath = path.CreateAbsolutePath(newPath);
-        path.SetPath(newAbsolutePath);
+        path.SetPath(newPath);
     }
 }

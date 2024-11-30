@@ -13,12 +13,7 @@ public class AbsolutePath
 
     public string? CreateAbsolutePath(string? path = null)
     {
-        if (_executor == null)
-        {
-            return null;
-        }
-
-        return _executor.CreateAbsolutePath(path);
+        return _executor?.CreateAbsolutePath(path);
     }
 
     public void SetPath(string? path)

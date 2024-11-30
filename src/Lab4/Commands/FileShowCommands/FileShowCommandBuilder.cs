@@ -8,12 +8,12 @@ public class FileShowCommandBuilder : BasicCommandBuilder
 
     public override ICommand? Build()
     {
-        if (_path is null || _outputMode is null || _fileShowExecutorDecider is null || Mode is null)
+        if (AbsolutePath is null || _outputMode is null || _fileShowExecutorDecider is null || Mode is null)
         {
             return null;
         }
 
-        return new FileShowCommand(_path, _outputMode, _fileShowExecutorDecider.Decide(Mode.Mode));
+        return new FileShowCommand(AbsolutePath.CreateAbsolutePath(_path), _outputMode, _fileShowExecutorDecider.Decide(Mode.Mode));
     }
 
     public FileShowCommandBuilder WithPath(string path)

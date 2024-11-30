@@ -8,12 +8,17 @@ public class FileCopyCommandBuilder : BasicCommandBuilder
 
     public override ICommand? Build()
     {
-        if (_sourcePath is null || _destinationPath is null || Mode is null || _fileCopyExecutorDecider is null)
+        if (Mode is null
+            || _fileCopyExecutorDecider is null
+            || AbsolutePath is null)
         {
             return null;
         }
 
-        return new FileCopyCommand(_sourcePath, _destinationPath, _fileCopyExecutorDecider.Decide(Mode.Mode));
+        return new FileCopyCommand(
+            AbsolutePath.CreateAbsolutePath(_sourcePath),
+            AbsolutePath.CreateAbsolutePath(_destinationPath),
+            _fileCopyExecutorDecider.Decide(Mode.Mode));
     }
 
     public FileCopyCommandBuilder WithSourcePath(string sourcePath)

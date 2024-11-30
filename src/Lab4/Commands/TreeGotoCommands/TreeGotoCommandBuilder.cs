@@ -7,12 +7,12 @@ public class TreeGotoCommandBuilder : BasicCommandBuilder
 
     public override ICommand? Build()
     {
-        if (_treeGotoExecutorDecider is null || _newPath is null || AbsolutePath is null || Mode is null)
+        if (_treeGotoExecutorDecider is null || AbsolutePath is null || Mode is null)
         {
             return null;
         }
 
-        return new TreeGotoCommand(AbsolutePath, _newPath, _treeGotoExecutorDecider.Decide(Mode.Mode));
+        return new TreeGotoCommand(AbsolutePath, AbsolutePath.CreateAbsolutePath(_newPath), _treeGotoExecutorDecider.Decide(Mode.Mode));
     }
 
     public TreeGotoCommandBuilder WithDecider(ITreeGotoExecutorDecider treeGotoExecutorDecider)

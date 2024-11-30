@@ -2,11 +2,11 @@
 
 public class FileRenameCommand : ICommand
 {
-    private readonly string _sourcePath;
+    private readonly string? _sourcePath;
     private readonly string _name;
     private readonly IFileRenameExecutor? _fileRenameExecutor;
 
-    public FileRenameCommand(string sourcePath, string name, IFileRenameExecutor? fileRenameExecutor)
+    public FileRenameCommand(string? sourcePath, string name, IFileRenameExecutor? fileRenameExecutor)
     {
         _sourcePath = sourcePath;
         _name = name;
@@ -15,6 +15,11 @@ public class FileRenameCommand : ICommand
 
     public void Execute()
     {
+        if (_sourcePath is null)
+        {
+            return;
+        }
+
         _fileRenameExecutor?.FileRename(_sourcePath, _name);
     }
 }

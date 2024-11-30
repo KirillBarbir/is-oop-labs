@@ -2,11 +2,11 @@
 
 public record FileDeleteCommand : ICommand
 {
-    private readonly string _path;
+    private readonly string? _path;
 
     private readonly IFileDeleteExecutor? _executor;
 
-    public FileDeleteCommand(string path, IFileDeleteExecutor? executor)
+    public FileDeleteCommand(string? path, IFileDeleteExecutor? executor)
     {
         _path = path;
         _executor = executor;
@@ -14,7 +14,7 @@ public record FileDeleteCommand : ICommand
 
     public void Execute()
     {
-        if (_executor is null)
+        if (_executor is null || _path is null)
         {
             return;
         }

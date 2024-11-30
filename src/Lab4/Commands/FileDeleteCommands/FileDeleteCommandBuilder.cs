@@ -7,12 +7,12 @@ public class FileDeleteCommandBuilder : BasicCommandBuilder
 
     public override ICommand? Build()
     {
-        if (_path is null || Mode is null || _fileDeleteExecutorDecider == null)
+        if (Mode is null || _fileDeleteExecutorDecider is null || AbsolutePath is null)
         {
             return null;
         }
 
-        return new FileDeleteCommand(_path, _fileDeleteExecutorDecider.Decide(Mode.Mode));
+        return new FileDeleteCommand(AbsolutePath.CreateAbsolutePath(_path), _fileDeleteExecutorDecider.Decide(Mode.Mode));
     }
 
     public FileDeleteCommandBuilder WithFilePath(string path)
