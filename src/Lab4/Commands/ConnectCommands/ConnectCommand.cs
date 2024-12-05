@@ -1,10 +1,10 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.AbsolutePaths;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.ConnectCommands;
 
 public class ConnectCommand : ICommand
 {
-    private readonly AbsolutePath _absolutePath;
+    private readonly IDictionary<string, IFilesystem>? _filesystems;
 
     private readonly ModeWrapper _modeWrapper;
 
@@ -12,9 +12,9 @@ public class ConnectCommand : ICommand
 
     private readonly string _newMode;
 
-    public ConnectCommand(AbsolutePath absolutePath, ModeWrapper modeWrapper, string newPath, string newMode)
+    public ConnectCommand(IDictionary<string, IFilesystem>? filesystems, ModeWrapper modeWrapper, string newPath, string newMode)
     {
-        _absolutePath = absolutePath;
+        _filesystems = filesystems;
         _modeWrapper = modeWrapper;
         _newPath = newPath;
         _newMode = newMode;
@@ -22,8 +22,13 @@ public class ConnectCommand : ICommand
 
     public void Execute()
     {
-        _absolutePath.ChangeMode(_newMode);
-        _absolutePath.SetPath(_newPath);
         _modeWrapper.SetMode(_newMode);
+        if (_filesystems is null)
+        {
+            return;
+        }
+
+        _filesystems.TryGetValue(_newMode, out IFilesystem? filesystem);
+        filesystem?.SetPath(_newPath);
     }
 }

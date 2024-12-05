@@ -5,14 +5,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.TreeInputCom
 
 public class TreeGotoInputCommandHandler : BaseInputCommandHandler
 {
-    private readonly ITreeGotoExecutorDecider _treeGotoExecutorDecider;
-
-    public TreeGotoInputCommandHandler(ITreeGotoExecutorDecider treeGotoExecutorDecider)
-    {
-        _treeGotoExecutorDecider = treeGotoExecutorDecider;
-    }
-
-    public override ICommandBuilder? HandleCommand(IEnumerator<string> request)
+   public override ICommandBuilder? HandleCommand(IEnumerator<string> request)
     {
         if (request.Current is not "goto")
         {
@@ -27,7 +20,6 @@ public class TreeGotoInputCommandHandler : BaseInputCommandHandler
         string path = request.Current;
         var builder = new TreeGotoCommandBuilder();
         return builder
-            .WithPath(path)
-            .WithDecider(_treeGotoExecutorDecider);
+            .WithPath(path);
     }
 }

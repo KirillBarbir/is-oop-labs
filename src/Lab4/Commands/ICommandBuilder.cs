@@ -1,4 +1,4 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.AbsolutePaths;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Commands;
 
@@ -6,7 +6,7 @@ public interface ICommandBuilder
 {
     ICommand? Build();
 
-    ICommandBuilder WithConnectedPath(AbsolutePath path);
+    public ICommandBuilder WithFilesystemModes(IDictionary<string, IFilesystem> filesystems);
 
     ICommandBuilder WithMode(ModeWrapper mode);
 }

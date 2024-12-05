@@ -1,16 +1,18 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.FileRenameCommands;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
+
+namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.FileRenameCommands;
 
 public class FileRenameCommand : ICommand
 {
     private readonly string? _sourcePath;
     private readonly string _name;
-    private readonly IFileRenameExecutor? _fileRenameExecutor;
+    private readonly IFilesystem? _filesystem;
 
-    public FileRenameCommand(string? sourcePath, string name, IFileRenameExecutor? fileRenameExecutor)
+    public FileRenameCommand(string? sourcePath, string name, IFilesystem? filesystem)
     {
         _sourcePath = sourcePath;
         _name = name;
-        _fileRenameExecutor = fileRenameExecutor;
+        _filesystem = filesystem;
     }
 
     public void Execute()
@@ -20,6 +22,6 @@ public class FileRenameCommand : ICommand
             return;
         }
 
-        _fileRenameExecutor?.FileRename(_sourcePath, _name);
+        _filesystem?.FileRename(_sourcePath, _name);
     }
 }

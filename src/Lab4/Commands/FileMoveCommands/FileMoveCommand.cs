@@ -1,16 +1,18 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.FileMoveCommands;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
+
+namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.FileMoveCommands;
 
 public class FileMoveCommand : ICommand
 {
     private readonly string? _sourcePath;
     private readonly string? _destinationPath;
-    private readonly IFileMoveExecutor? _fileMoveExecutor;
+    private readonly IFilesystem? _filesystem;
 
-    public FileMoveCommand(string? sourcePath, string? destinationPath, IFileMoveExecutor? fileMoveExecutor)
+    public FileMoveCommand(string? sourcePath, string? destinationPath, IFilesystem? filesystem)
     {
         _sourcePath = sourcePath;
         _destinationPath = destinationPath;
-        _fileMoveExecutor = fileMoveExecutor;
+        _filesystem = filesystem;
     }
 
     public void Execute()
@@ -20,6 +22,6 @@ public class FileMoveCommand : ICommand
             return;
         }
 
-        _fileMoveExecutor?.FileMove(_sourcePath, _destinationPath);
+        _filesystem?.FileMove(_sourcePath, _destinationPath);
     }
 }

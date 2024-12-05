@@ -1,19 +1,21 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.FileShowCommands;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
+
+namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.FileShowCommands;
 
 public class FileShowCommandBuilder : BasicCommandBuilder
 {
-    private IFileShowExecutorDecider? _fileShowExecutorDecider;
     private string? _path;
     private string? _outputMode;
 
     public override ICommand? Build()
     {
-        if (AbsolutePath is null || _outputMode is null || _fileShowExecutorDecider is null || Mode is null)
+        if (Mode?.Mode is null || Filesystems is null ||
+            !Filesystems.TryGetValue(Mode.Mode, out IFilesystem? filesystem) || _outputMode is null)
         {
             return null;
         }
 
-        return new FileShowCommand(AbsolutePath.CreateAbsolutePath(_path), _outputMode, _fileShowExecutorDecider.Decide(Mode.Mode));
+        return new FileShowCommand(_path, _outputMode, filesystem);
     }
 
     public FileShowCommandBuilder WithPath(string path)
@@ -25,12 +27,6 @@ public class FileShowCommandBuilder : BasicCommandBuilder
     public FileShowCommandBuilder WithOutputMode(string outputMode)
     {
         _outputMode = outputMode;
-        return this;
-    }
-
-    public FileShowCommandBuilder WithDecider(IFileShowExecutorDecider decider)
-    {
-        _fileShowExecutorDecider = decider;
         return this;
     }
 }

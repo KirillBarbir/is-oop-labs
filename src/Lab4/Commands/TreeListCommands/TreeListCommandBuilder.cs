@@ -1,29 +1,25 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
+
+namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands;
 
 public class TreeListCommandBuilder : BasicCommandBuilder
 {
     private int _depth = 1;
-    private ITreeListExecutorDecider? _treeListExecutorDecider;
 
     public override ICommand? Build()
     {
-        if (AbsolutePath is null || _treeListExecutorDecider is null || Mode is null)
+        if (Mode?.Mode is null || Filesystems is null ||
+            !Filesystems.TryGetValue(Mode.Mode, out IFilesystem? filesystem))
         {
             return null;
         }
 
-        return new TreeListCommand(AbsolutePath, _depth, _treeListExecutorDecider.Decide(Mode.Mode));
+        return new TreeListCommand(_depth, filesystem);
     }
 
     public TreeListCommandBuilder WithDepth(int depth)
     {
         _depth = depth;
-        return this;
-    }
-
-    public TreeListCommandBuilder WithDecider(ITreeListExecutorDecider decider)
-    {
-        _treeListExecutorDecider = decider;
         return this;
     }
 }

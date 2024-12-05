@@ -1,29 +1,25 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.FileDeleteCommands;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
+
+namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.FileDeleteCommands;
 
 public class FileDeleteCommandBuilder : BasicCommandBuilder
 {
-    private IFileDeleteExecutorDecider? _fileDeleteExecutorDecider;
     private string? _path;
 
     public override ICommand? Build()
     {
-        if (Mode is null || _fileDeleteExecutorDecider is null || AbsolutePath is null)
+        if (Mode?.Mode is null || Filesystems is null ||
+            !Filesystems.TryGetValue(Mode.Mode, out IFilesystem? filesystem))
         {
             return null;
         }
 
-        return new FileDeleteCommand(AbsolutePath.CreateAbsolutePath(_path), _fileDeleteExecutorDecider.Decide(Mode.Mode));
+        return new FileDeleteCommand(_path, filesystem);
     }
 
     public FileDeleteCommandBuilder WithFilePath(string path)
     {
         _path = path;
-        return this;
-    }
-
-    public FileDeleteCommandBuilder WithDecider(IFileDeleteExecutorDecider decider)
-    {
-        _fileDeleteExecutorDecider = decider;
         return this;
     }
 }

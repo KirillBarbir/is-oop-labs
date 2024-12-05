@@ -5,13 +5,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FileInputCom
 
 public class FileRenameInputCommandHandler : BaseInputCommandHandler
 {
-    private readonly IFileRenameExecutorDecider _fileRenameExecutorDecider;
-
-    public FileRenameInputCommandHandler(IFileRenameExecutorDecider fileRenameExecutorDecider)
-    {
-        _fileRenameExecutorDecider = fileRenameExecutorDecider;
-    }
-
     public override ICommandBuilder? HandleCommand(IEnumerator<string> request)
     {
         if (request.Current is not "rename")
@@ -35,7 +28,6 @@ public class FileRenameInputCommandHandler : BaseInputCommandHandler
         var builder = new FileRenameCommandBuilder();
         return builder
             .WithSourcePath(sourcePath)
-            .WithName(name)
-            .WithDecider(_fileRenameExecutorDecider);
+            .WithName(name);
     }
 }

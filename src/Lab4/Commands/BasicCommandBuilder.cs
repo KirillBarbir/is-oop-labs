@@ -1,18 +1,21 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.AbsolutePaths;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Commands;
 
 public abstract class BasicCommandBuilder : ICommandBuilder
 {
-    protected AbsolutePath? AbsolutePath { get; private set; }
+#pragma warning disable SK1500
+    protected IDictionary<string, IFilesystem>? Filesystems { get; private set; }
 
+    // string is definitely IEquatable
+#pragma warning restore SK1500
     protected ModeWrapper? Mode { get; private set; }
 
     public abstract ICommand? Build();
 
-    public ICommandBuilder WithConnectedPath(AbsolutePath path)
+    public ICommandBuilder WithFilesystemModes(IDictionary<string, IFilesystem> filesystems)
     {
-        AbsolutePath = path;
+        Filesystems = filesystems;
         return this;
     }
 

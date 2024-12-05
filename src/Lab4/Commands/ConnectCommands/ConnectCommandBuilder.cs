@@ -7,12 +7,12 @@ public class ConnectCommandBuilder : BasicCommandBuilder
 
     public override ICommand? Build()
     {
-        if (AbsolutePath is null || Mode is null || _newPath is null || _newMode is null)
+        if (Mode is null || _newPath is null || _newMode is null)
         {
             return null;
         }
 
-        return new ConnectCommand(AbsolutePath, Mode, _newPath, _newMode);
+        return new ConnectCommand(Filesystems, Mode, _newPath, _newMode);
     }
 
     public ConnectCommandBuilder WithNewPath(string newPath)

@@ -1,24 +1,21 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.FileCopyCommands;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
+
+namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.FileCopyCommands;
 
 public class FileCopyCommandBuilder : BasicCommandBuilder
 {
-    private IFileCopyExecutorDecider? _fileCopyExecutorDecider;
     private string? _sourcePath;
     private string? _destinationPath;
 
     public override ICommand? Build()
     {
-        if (Mode is null
-            || _fileCopyExecutorDecider is null
-            || AbsolutePath is null)
+        if (Mode?.Mode is null || Filesystems is null ||
+            !Filesystems.TryGetValue(Mode.Mode, out IFilesystem? filesystem))
         {
             return null;
         }
 
-        return new FileCopyCommand(
-            AbsolutePath.CreateAbsolutePath(_sourcePath),
-            AbsolutePath.CreateAbsolutePath(_destinationPath),
-            _fileCopyExecutorDecider.Decide(Mode.Mode));
+        return new FileCopyCommand(_sourcePath, _destinationPath, filesystem);
     }
 
     public FileCopyCommandBuilder WithSourcePath(string sourcePath)
@@ -30,12 +27,6 @@ public class FileCopyCommandBuilder : BasicCommandBuilder
     public FileCopyCommandBuilder WithDestinationPath(string destinationPath)
     {
         _destinationPath = destinationPath;
-        return this;
-    }
-
-    public FileCopyCommandBuilder WithDecider(IFileCopyExecutorDecider decider)
-    {
-        _fileCopyExecutorDecider = decider;
         return this;
     }
 }

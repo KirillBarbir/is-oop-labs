@@ -1,5 +1,5 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands;
-using Itmo.ObjectOrientedProgramming.Lab4.Commands.AbsolutePaths;
+using Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
 using Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4;
@@ -9,20 +9,26 @@ public class Runner
     private readonly IInputCommandHandler _handler;
 
     private readonly ModeWrapper _mode = new ModeWrapper();
+#pragma warning disable SK1500
+    private readonly IDictionary<string, IFilesystem> _supportedFilesystems = new Dictionary<string, IFilesystem>();
 
-    private readonly AbsolutePath _absolutePath;
-
-    public Runner(IInputCommandHandler handler, IAbsolutePathDecider absolutePathDecider)
+// String is definitely IEquitable
+#pragma warning restore SK1500
+    public Runner(IInputCommandHandler handler)
     {
         _handler = handler;
-        _absolutePath = new AbsolutePath(absolutePathDecider);
     }
 
-    public ReturnType Run(IEnumerable<string>? args)
+    public void AddSupportedFilesystemMode(string mode, IFilesystem filesystem)
+    {
+        _supportedFilesystems.TryAdd(mode, filesystem);
+    }
+
+    public ResultType Run(IEnumerable<string>? args)
     {
         if (args is null)
         {
-            return ReturnType.Failure;
+            return ResultType.Failure;
         }
 
         using IEnumerator<string> request = args.GetEnumerator();
@@ -31,7 +37,7 @@ public class Runner
             ICommandBuilder? nextBuilder = _handler.HandleCommand(request);
             if (nextBuilder is not null)
             {
-                ICommand? command = nextBuilder.WithMode(_mode).WithConnectedPath(_absolutePath).Build();
+                ICommand? command = nextBuilder.WithMode(_mode).WithFilesystemModes(_supportedFilesystems).Build();
                 if (command is not null)
                 {
                     command.Execute();
@@ -39,7 +45,7 @@ public class Runner
                 else
                 {
                     Console.WriteLine("I give up");
-                    return ReturnType.Failure;
+                    return ResultType.Failure;
                 }
             }
             else
@@ -48,6 +54,6 @@ public class Runner
             }
         }
 
-        return ReturnType.Success;
+        return ResultType.Success;
     }
 }

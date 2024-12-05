@@ -1,22 +1,20 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.AbsolutePaths;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands;
 
 public class TreeListCommand : ICommand
 {
-    private readonly AbsolutePath _absolutePath;
     private readonly int _depth;
-    private readonly ITreeListExecutor? _treeListExecutor;
+    private readonly IFilesystem? _filesystem;
 
-    public TreeListCommand(AbsolutePath path, int depth, ITreeListExecutor? treeListExecutor)
+    public TreeListCommand(int depth, IFilesystem? filesystem)
     {
-        _absolutePath = path;
         _depth = depth;
-        _treeListExecutor = treeListExecutor;
+        _filesystem = filesystem;
     }
 
     public void Execute()
     {
-        _treeListExecutor?.Print(_absolutePath, _depth);
+        _filesystem?.TreeList(_depth);
     }
 }

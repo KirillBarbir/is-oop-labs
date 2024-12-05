@@ -5,13 +5,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FileInputCom
 
 public class FileCopyInputCommandHandler : BaseInputCommandHandler
 {
-    private readonly IFileCopyExecutorDecider _fileCopyExecutorDecider;
-
-    public FileCopyInputCommandHandler(IFileCopyExecutorDecider fileCopyExecutorDecider)
-    {
-        _fileCopyExecutorDecider = fileCopyExecutorDecider;
-    }
-
     public override ICommandBuilder? HandleCommand(IEnumerator<string> request)
     {
         if (request.Current is not "copy")
@@ -35,7 +28,6 @@ public class FileCopyInputCommandHandler : BaseInputCommandHandler
         var builder = new FileCopyCommandBuilder();
         return builder
             .WithSourcePath(sourcePath)
-            .WithDestinationPath(destinationPath)
-            .WithDecider(_fileCopyExecutorDecider);
+            .WithDestinationPath(destinationPath);
     }
 }

@@ -5,13 +5,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FileInputCom
 
 public class FileShowInputCommandHandler : BaseInputCommandHandler
 {
-    private readonly IFileShowExecutorDecider _fileShowExecutorDecider;
-
-    public FileShowInputCommandHandler(IFileShowExecutorDecider fileShowExecutorDecider)
-    {
-        _fileShowExecutorDecider = fileShowExecutorDecider;
-    }
-
     public override ICommandBuilder? HandleCommand(IEnumerator<string> request)
     {
         if (request.Current is not "show")
@@ -35,7 +28,6 @@ public class FileShowInputCommandHandler : BaseInputCommandHandler
         var builder = new FileShowCommandBuilder();
         return builder
             .WithPath(path)
-            .WithOutputMode(mode)
-            .WithDecider(_fileShowExecutorDecider);
+            .WithOutputMode(mode);
     }
 }

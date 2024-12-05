@@ -5,13 +5,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.TreeInputCom
 
 public class TreeListInputCommandHandler : BaseInputCommandHandler
 {
-    private readonly ITreeListExecutorDecider _treeListExecutorDecider;
-
-    public TreeListInputCommandHandler(ITreeListExecutorDecider treeListExecutorDecider)
-    {
-        _treeListExecutorDecider = treeListExecutorDecider;
-    }
-
     public override ICommandBuilder? HandleCommand(IEnumerator<string> request)
     {
         if (request.Current is not "list")
@@ -27,7 +20,6 @@ public class TreeListInputCommandHandler : BaseInputCommandHandler
 
         var builder = new TreeListCommandBuilder();
         return builder
-            .WithDepth(depth)
-            .WithDecider(_treeListExecutorDecider);
+            .WithDepth(depth);
     }
 }

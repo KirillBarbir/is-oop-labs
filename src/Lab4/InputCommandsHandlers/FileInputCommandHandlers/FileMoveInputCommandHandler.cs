@@ -5,13 +5,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FileInputCom
 
 public class FileMoveInputCommandHandler : BaseInputCommandHandler
 {
-    private readonly IFileMoveExecutorDecider _fileMoveExecutorDecider;
-
-    public FileMoveInputCommandHandler(IFileMoveExecutorDecider fileMoveExecutorDecider)
-    {
-        _fileMoveExecutorDecider = fileMoveExecutorDecider;
-    }
-
     public override ICommandBuilder? HandleCommand(IEnumerator<string> request)
     {
         if (request.Current is not "move")
@@ -35,7 +28,6 @@ public class FileMoveInputCommandHandler : BaseInputCommandHandler
         var builder = new FileMoveCommandBuilder();
         return builder
             .WithSourcePath(sourcePath)
-            .WithDestinationPath(destinationPath)
-            .WithDecider(_fileMoveExecutorDecider);
+            .WithDestinationPath(destinationPath);
     }
 }

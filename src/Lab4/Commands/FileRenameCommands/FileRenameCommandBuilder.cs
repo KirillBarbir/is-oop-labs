@@ -1,19 +1,21 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.FileRenameCommands;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
+
+namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.FileRenameCommands;
 
 public class FileRenameCommandBuilder : BasicCommandBuilder
 {
-    private IFileRenameExecutorDecider? _fileRenameExecutorDecider;
     private string? _sourcePath;
     private string? _name;
 
     public override ICommand? Build()
     {
-        if (AbsolutePath is null || _name is null || Mode is null || _fileRenameExecutorDecider is null)
+        if (Mode?.Mode is null || Filesystems is null ||
+            !Filesystems.TryGetValue(Mode.Mode, out IFilesystem? filesystem) || _name is null)
         {
             return null;
         }
 
-        return new FileRenameCommand(AbsolutePath.CreateAbsolutePath(_sourcePath), _name, _fileRenameExecutorDecider.Decide(Mode.Mode));
+        return new FileRenameCommand(_sourcePath, _name, filesystem);
     }
 
     public FileRenameCommandBuilder WithSourcePath(string sourcePath)
@@ -25,12 +27,6 @@ public class FileRenameCommandBuilder : BasicCommandBuilder
     public FileRenameCommandBuilder WithName(string name)
     {
         _name = name;
-        return this;
-    }
-
-    public FileRenameCommandBuilder WithDecider(IFileRenameExecutorDecider decider)
-    {
-        _fileRenameExecutorDecider = decider;
         return this;
     }
 }
