@@ -9,11 +9,8 @@ public class Runner
     private readonly IInputCommandHandler _handler;
 
     private readonly ModeWrapper _mode = new ModeWrapper();
-#pragma warning disable SK1500
     private readonly IDictionary<string, IFilesystem> _supportedFilesystems = new Dictionary<string, IFilesystem>();
 
-// String is definitely IEquitable
-#pragma warning restore SK1500
     public Runner(IInputCommandHandler handler)
     {
         _handler = handler;
@@ -24,11 +21,11 @@ public class Runner
         _supportedFilesystems.TryAdd(mode, filesystem);
     }
 
-    public ResultType Run(IEnumerable<string>? args)
+    public RunnerResultEnum Run(IEnumerable<string>? args)
     {
         if (args is null)
         {
-            return ResultType.Failure;
+            return RunnerResultEnum.Failure;
         }
 
         using IEnumerator<string> request = args.GetEnumerator();
@@ -45,7 +42,7 @@ public class Runner
                 else
                 {
                     Console.WriteLine("I give up");
-                    return ResultType.Failure;
+                    return RunnerResultEnum.Failure;
                 }
             }
             else
@@ -54,6 +51,6 @@ public class Runner
             }
         }
 
-        return ResultType.Success;
+        return RunnerResultEnum.Success;
     }
 }

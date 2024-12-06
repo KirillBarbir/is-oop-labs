@@ -4,22 +4,26 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.Visitors
 
 public class ConsoleVisitor : IVisitor
 {
+    private readonly string _directorySymbol;
+    private readonly string _fileSymbol;
     private readonly int _maxDepth;
     private int _depth;
 
-    public ConsoleVisitor(int maxDepth)
+    public ConsoleVisitor(int maxDepth, string directorySymbol, string fileSymbol)
     {
         _maxDepth = maxDepth;
+        _directorySymbol = directorySymbol;
+        _fileSymbol = fileSymbol;
     }
 
     public void Visit(FileElement fileElement)
     {
-        IndentOutput("@|" + fileElement.Name);
+        IndentOutput(_fileSymbol + fileElement.Name);
     }
 
     public void Visit(DirectoryElement directoryElement)
     {
-        IndentOutput("<>" + directoryElement.Name);
+        IndentOutput(_directorySymbol + directoryElement.Name);
         if (_depth == _maxDepth)
         {
             return;

@@ -1,6 +1,6 @@
 ﻿namespace Itmo.ObjectOrientedProgramming.Lab4;
 
-public enum ResultType
+public enum RunnerResultEnum
 {
     Success,
     Failure,

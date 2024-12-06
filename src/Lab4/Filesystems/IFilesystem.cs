@@ -10,11 +10,11 @@ public interface IFilesystem
 
     void FileRename(string? sourcePath, string name);
 
-    void OutputFile(string? sourcePath, string outputMode);
+    void FileShow(string? sourcePath, string outputMode);
 
     void TreeGoto(string newPath);
 
-    void TreeList(int depth);
+    void TreeList(int depth, string outputMode);
 
     void SetPath(string newPath);
 }

@@ -6,15 +6,17 @@ public class TreeListCommand : ICommand
 {
     private readonly int _depth;
     private readonly IFilesystem? _filesystem;
+    private readonly string _outputMode;
 
-    public TreeListCommand(int depth, IFilesystem? filesystem)
+    public TreeListCommand(int depth, IFilesystem? filesystem, string outputMode = "console")
     {
         _depth = depth;
         _filesystem = filesystem;
+        _outputMode = outputMode;
     }
 
     public void Execute()
     {
-        _filesystem?.TreeList(_depth);
+        _filesystem?.TreeList(_depth, _outputMode);
     }
 }

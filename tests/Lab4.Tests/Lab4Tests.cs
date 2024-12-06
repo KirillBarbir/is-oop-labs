@@ -23,11 +23,7 @@ public class Lab4Tests
         // Arrange
         string[] args = ["connect", "C:", "-m", "local"];
         var creator = new ChainCreator();
-#pragma warning disable SK1500
         var supportedFilesystems = new Dictionary<string, IFilesystem>();
-
-// String is definitely IEquitable
-#pragma warning restore SK1500
         supportedFilesystems.Add("local", new LocalFilesystem());
         var mode = new ModeWrapper();
         var expectedCommand = new ConnectCommand(supportedFilesystems, mode, "path", "local");
@@ -48,11 +44,7 @@ public class Lab4Tests
         // Arrange
         string[] args = ["disconnect"];
         var creator = new ChainCreator();
-#pragma warning disable SK1500
         var supportedFilesystems = new Dictionary<string, IFilesystem>();
-
-// String is definitely IEquitable
-#pragma warning restore SK1500
         supportedFilesystems.Add("local", new LocalFilesystem());
         supportedFilesystems["local"].SetPath("C:");
         var mode = new ModeWrapper();
@@ -75,11 +67,7 @@ public class Lab4Tests
         // Arrange
         string[] args = ["tree", "goto", "C:\\Users"];
         var creator = new ChainCreator();
-#pragma warning disable SK1500
         var supportedFilesystems = new Dictionary<string, IFilesystem>();
-
-// String is definitely IEquitable
-#pragma warning restore SK1500
         supportedFilesystems.Add("local", new LocalFilesystem());
         supportedFilesystems["local"].SetPath("C:");
         var mode = new ModeWrapper();
@@ -102,11 +90,9 @@ public class Lab4Tests
         // Arrange
         string[] args = ["tree", "list", "-d", "3"];
         var creator = new ChainCreator();
-#pragma warning disable SK1500
+
         var supportedFilesystems = new Dictionary<string, IFilesystem>();
 
-// String is definitely IEquitable
-#pragma warning restore SK1500
         supportedFilesystems.Add("local", new LocalFilesystem());
         supportedFilesystems["local"].SetPath("C:");
         var mode = new ModeWrapper();
@@ -129,11 +115,7 @@ public class Lab4Tests
         // Arrange
         string[] args = ["file", "show", "C:\\Users", "-m", "console"];
         var creator = new ChainCreator();
-#pragma warning disable SK1500
         var supportedFilesystems = new Dictionary<string, IFilesystem>();
-
-// String is definitely IEquitable
-#pragma warning restore SK1500
         supportedFilesystems.Add("local", new LocalFilesystem());
         supportedFilesystems["local"].SetPath("C:");
         var mode = new ModeWrapper();
@@ -156,11 +138,7 @@ public class Lab4Tests
         // Arrange
         string[] args = ["file", "move", "C:\\Users", "C:\\Program Files"];
         var creator = new ChainCreator();
-#pragma warning disable SK1500
         var supportedFilesystems = new Dictionary<string, IFilesystem>();
-
-// String is definitely IEquitable
-#pragma warning restore SK1500
         supportedFilesystems.Add("local", new LocalFilesystem());
         supportedFilesystems["local"].SetPath("C:");
         var mode = new ModeWrapper();
@@ -186,11 +164,7 @@ public class Lab4Tests
         // Arrange
         string[] args = ["file", "copy", "C:\\Users", "C:\\Program Files"];
         var creator = new ChainCreator();
-#pragma warning disable SK1500
         var supportedFilesystems = new Dictionary<string, IFilesystem>();
-
-// String is definitely IEquitable
-#pragma warning restore SK1500
         supportedFilesystems.Add("local", new LocalFilesystem());
         supportedFilesystems["local"].SetPath("C:");
         var mode = new ModeWrapper();
@@ -216,11 +190,7 @@ public class Lab4Tests
         // Arrange
         string[] args = ["file", "delete", "C:\\Users"];
         var creator = new ChainCreator();
-#pragma warning disable SK1500
         var supportedFilesystems = new Dictionary<string, IFilesystem>();
-
-// String is definitely IEquitable
-#pragma warning restore SK1500
         supportedFilesystems.Add("local", new LocalFilesystem());
         supportedFilesystems["local"].SetPath("C:");
         var mode = new ModeWrapper();
@@ -243,11 +213,9 @@ public class Lab4Tests
         // Arrange
         string[] args = ["file", "rename", "C:\\Users", "newName"];
         var creator = new ChainCreator();
-#pragma warning disable SK1500
         var supportedFilesystems = new Dictionary<string, IFilesystem>();
 
 // String is definitely IEquitable
-#pragma warning restore SK1500
         supportedFilesystems.Add("local", new LocalFilesystem());
         supportedFilesystems["local"].SetPath("C:");
         var mode = new ModeWrapper();
@@ -270,11 +238,7 @@ public class Lab4Tests
         // Arrange
         string[] args = ["   ", "  ", "   ", "mnjelbkl"];
         var creator = new ChainCreator();
-#pragma warning disable SK1500
         var supportedFilesystems = new Dictionary<string, IFilesystem>();
-
-// String is definitely IEquitable
-#pragma warning restore SK1500
         supportedFilesystems.Add("local", new LocalFilesystem());
         supportedFilesystems["local"].SetPath("C:");
         var mode = new ModeWrapper();

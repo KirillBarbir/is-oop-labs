@@ -22,6 +22,6 @@ public record FileShowCommand : ICommand
             return;
         }
 
-        _filesystem?.OutputFile(_path, _outputMode);
+        _filesystem?.FileShow(_path, _outputMode);
     }
 }

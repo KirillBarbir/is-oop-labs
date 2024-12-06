@@ -1,17 +1,14 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.Elements;
-using Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.Visitors;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.TreeListOutputers;
 using Itmo.ObjectOrientedProgramming.Lab4.FileOutputers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
 
 public class LocalFilesystem : IFilesystem
 {
-#pragma warning disable SK1500
-    private readonly Dictionary<string, IFileOutputer> _supportedFileOutputModes =
-        new Dictionary<string, IFileOutputer>();
+    private readonly Dictionary<string, IFileOutputer> _supportedFileOutputModes = new();
 
-// String is definitely IEquitable
-#pragma warning restore SK1500
+    private readonly Dictionary<string, ITreeListOutputer> _supportedTreeListModes = new();
+
     private string? _absolutePath;
 
     public void FileCopy(string? sourcePath, string? destinationPath)
@@ -99,11 +96,10 @@ public class LocalFilesystem : IFilesystem
             return;
         }
 
-        File.Copy(sourcePath, newPath);
-        File.Delete(sourcePath);
+        File.Move(sourcePath, newPath);
     }
 
-    public void OutputFile(string? sourcePath, string outputMode)
+    public void FileShow(string? sourcePath, string outputMode)
     {
         sourcePath = CreateAbsolutePath(sourcePath);
         if (sourcePath is null)
@@ -125,17 +121,15 @@ public class LocalFilesystem : IFilesystem
         _absolutePath = CreateAbsolutePath(newPath);
     }
 
-    public void TreeList(int depth)
+    public void TreeList(int depth, string outputMode)
     {
-        var factory = new ElementFactory();
         if (_absolutePath is null)
         {
             return;
         }
 
-        IElement? element = factory.CreateElement(_absolutePath);
-        var visitor = new ConsoleVisitor(depth);
-        element?.Accept(visitor);
+        _supportedTreeListModes.TryGetValue(outputMode, out ITreeListOutputer? outputer);
+        outputer?.Output(depth, _absolutePath);
     }
 
     public void SetPath(string newPath)
@@ -146,6 +140,11 @@ public class LocalFilesystem : IFilesystem
     public void AddFileOutputerMode(string mode, IFileOutputer fileOutputer)
     {
         _supportedFileOutputModes.TryAdd(mode, fileOutputer);
+    }
+
+    public void AddTreeListMode(string mode, ITreeListOutputer outputer)
+    {
+        _supportedTreeListModes.TryAdd(mode, outputer);
     }
 
     private string? CreateAbsolutePath(string? newPath = null)

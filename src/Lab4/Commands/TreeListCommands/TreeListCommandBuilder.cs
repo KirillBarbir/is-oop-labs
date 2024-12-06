@@ -5,6 +5,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands;
 public class TreeListCommandBuilder : BasicCommandBuilder
 {
     private int _depth = 1;
+    private string _outputMode = "console";
 
     public override ICommand? Build()
     {
@@ -14,12 +15,18 @@ public class TreeListCommandBuilder : BasicCommandBuilder
             return null;
         }
 
-        return new TreeListCommand(_depth, filesystem);
+        return new TreeListCommand(_depth, filesystem, _outputMode);
     }
 
     public TreeListCommandBuilder WithDepth(int depth)
     {
         _depth = depth;
+        return this;
+    }
+
+    public TreeListCommandBuilder WithOutputMode(string mode)
+    {
+        _outputMode = mode;
         return this;
     }
 }
