@@ -1,5 +1,7 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands;
 using Itmo.ObjectOrientedProgramming.Lab4.Commands.FileShowCommands;
+using Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FlagHandling;
+using Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FlagHandling.FlagCommandBuilders;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FileInputCommandHandlers;
 
@@ -19,15 +21,14 @@ public class FileShowInputCommandHandler : BaseInputCommandHandler
 
         string path = request.Current;
 
-        string mode = "console";
-        if (request.Current is "-m" && request.MoveNext())
+        if (request.MoveNext() is false)
         {
-            mode = request.Current;
+            return null;
         }
 
-        var builder = new FileShowCommandBuilder();
-        return builder
-            .WithPath(path)
-            .WithOutputMode(mode);
+        var builder = new FileShowCommandFlaggedBuilder();
+        var handler =
+            new GenericFlagHandler<FileShowCommandBuilder, FileShowCommandFlaggedBuilder>("-m", builder, "console");
+        return handler.Handle(request)?.WithPath(path);
     }
 }

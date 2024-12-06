@@ -14,7 +14,7 @@ public class Program
         var local = new LocalFilesystem();
         local.AddTreeListMode("console", new ConsoleTreeListOutputer());
         local.AddFileOutputerMode("console", new ConsoleFileOutputer());
-        runner.AddSupportedFilesystemMode("local", new LocalFilesystem());
+        runner.AddSupportedFilesystemMode("local", local);
         while (true)
         {
             runner.Run(Console.ReadLine()?.Split());

@@ -1,5 +1,7 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands;
 using Itmo.ObjectOrientedProgramming.Lab4.Commands.ConnectCommands;
+using Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FlagHandling;
+using Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FlagHandling.FlagCommandBuilders;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers;
 
@@ -24,13 +26,9 @@ public class ConnectInputCommandHandler : BaseInputCommandHandler
             return null;
         }
 
-        string mode = "local";
-        if (request.Current is "-m" && request.MoveNext())
-        {
-            mode = request.Current;
-        }
-
-        var builder = new ConnectCommandBuilder();
-        return builder.WithNewPath(address).WithNewMode(mode);
+        var builder = new ConnectCommandFlaggedBuilder();
+        var handler =
+            new GenericFlagHandler<ConnectCommandBuilder, ConnectCommandFlaggedBuilder>("-m", builder, "local");
+        return handler.Handle(request)?.WithNewPath(address);
     }
 }

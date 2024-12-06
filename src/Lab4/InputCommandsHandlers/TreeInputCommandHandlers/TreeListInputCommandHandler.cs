@@ -1,5 +1,7 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands;
 using Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands;
+using Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FlagHandling;
+using Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.FlagHandling.FlagCommandBuilders;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.InputCommandsHandlers.TreeInputCommandHandlers;
 
@@ -12,14 +14,14 @@ public class TreeListInputCommandHandler : BaseInputCommandHandler
             return Next?.HandleCommand(request);
         }
 
-        int depth = 1;
-        if (request.MoveNext() && request.Current is "-d" && request.MoveNext())
+        if (!request.MoveNext())
         {
-            depth = int.Parse(request.Current);
+            return null;
         }
 
-        var builder = new TreeListCommandBuilder();
-        return builder
-            .WithDepth(depth);
+        var builder = new TreeListCommandFlaggedBuilder();
+        var handler =
+            new GenericFlagHandler<TreeListCommandBuilder, TreeListCommandFlaggedBuilder>("-d", builder, "1");
+        return handler.Handle(request);
     }
 }
