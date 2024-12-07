@@ -1,4 +1,6 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.TreeListOutputers;
+﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.Elements;
+using Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.Outputers;
+using Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.Visitors;
 using Itmo.ObjectOrientedProgramming.Lab4.FileOutputers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Filesystems;
@@ -7,7 +9,7 @@ public class LocalFilesystem : IFilesystem
 {
     private readonly Dictionary<string, IFileOutputer> _supportedFileOutputModes = new();
 
-    private readonly Dictionary<string, ITreeListOutputer> _supportedTreeListModes = new();
+    private readonly Dictionary<string, IOutputer> _supportedTreeListModes = new();
 
     private string? _absolutePath;
 
@@ -121,15 +123,23 @@ public class LocalFilesystem : IFilesystem
         _absolutePath = CreateAbsolutePath(newPath);
     }
 
-    public void TreeList(int depth, string outputMode)
+    public void TreeList(int depth, string outputMode, string directorySymbol = "<>", string fileSymbol = "|@")
     {
         if (_absolutePath is null)
         {
             return;
         }
 
-        _supportedTreeListModes.TryGetValue(outputMode, out ITreeListOutputer? outputer);
-        outputer?.Output(depth, _absolutePath);
+        _supportedTreeListModes.TryGetValue(outputMode, out IOutputer? outputer);
+        var factory = new FilesystemElementsFactory();
+        IFilesystemElement? element = factory.CreateElement(_absolutePath);
+        if (outputer is null)
+        {
+            return;
+        }
+
+        var visitor = new LocalVisitor(depth, directorySymbol, fileSymbol, outputer);
+        element?.Accept(visitor);
     }
 
     public void SetPath(string newPath)
@@ -142,7 +152,7 @@ public class LocalFilesystem : IFilesystem
         _supportedFileOutputModes.TryAdd(mode, fileOutputer);
     }
 
-    public void AddTreeListMode(string mode, ITreeListOutputer outputer)
+    public void AddTreeListMode(string mode, IOutputer outputer)
     {
         _supportedTreeListModes.TryAdd(mode, outputer);
     }

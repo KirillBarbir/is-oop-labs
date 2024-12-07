@@ -1,29 +1,32 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.Elements;
+using Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.Outputers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.Visitors;
 
-public class ConsoleVisitor : IVisitor
+public class LocalVisitor : IVisitor
 {
     private readonly string _directorySymbol;
     private readonly string _fileSymbol;
     private readonly int _maxDepth;
+    private readonly IOutputer _outputer;
     private int _depth;
 
-    public ConsoleVisitor(int maxDepth, string directorySymbol, string fileSymbol)
+    public LocalVisitor(int maxDepth, string directorySymbol, string fileSymbol, IOutputer outputer)
     {
         _maxDepth = maxDepth;
         _directorySymbol = directorySymbol;
         _fileSymbol = fileSymbol;
+        _outputer = outputer;
     }
 
-    public void Visit(FileElement fileElement)
+    public void Visit(FileFilesystemElement fileFilesystemElement)
     {
-        IndentOutput(_fileSymbol + fileElement.Name);
+        IndentOutput(_fileSymbol + fileFilesystemElement.Name);
     }
 
-    public void Visit(DirectoryElement directoryElement)
+    public void Visit(DirectoryFilesystemElement directoryFilesystemElement)
     {
-        IndentOutput(_directorySymbol + directoryElement.Name);
+        IndentOutput(_directorySymbol + directoryFilesystemElement.Name);
         if (_depth == _maxDepth)
         {
             return;
@@ -31,7 +34,7 @@ public class ConsoleVisitor : IVisitor
 
         ++_depth;
 
-        foreach (IElement? subElement in directoryElement.Elements)
+        foreach (IFilesystemElement? subElement in directoryFilesystemElement.Elements.Value)
         {
             if (subElement is null)
             {
@@ -52,6 +55,6 @@ public class ConsoleVisitor : IVisitor
             indent += "__";
         }
 
-        Console.WriteLine(indent + text);
+        _outputer.Output(indent + text);
     }
 }

@@ -6,7 +6,7 @@ public class TreeListCommandFlaggedBuilder : TreeListCommandBuilder, IFlaggedCom
 {
     public TreeListCommandBuilder WithFlag(string? flag)
     {
-            if (flag is not null) WithDepth(int.Parse(flag));
-            return this;
+        if (flag is not null) WithDepth(int.Parse(flag));
+        return this;
     }
 }

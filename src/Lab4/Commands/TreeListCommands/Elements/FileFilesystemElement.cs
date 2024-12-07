@@ -2,15 +2,12 @@
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.Elements;
 
-public class DirectoryElement : IElement
+public class FileFilesystemElement : IFilesystemElement
 {
-    public DirectoryElement(IReadOnlyCollection<IElement?> elements, string name)
+    public FileFilesystemElement(string name)
     {
-        Elements = elements;
         Name = name;
     }
-
-    public IReadOnlyCollection<IElement?> Elements { get; }
 
     public string Name { get; }
 

@@ -14,7 +14,7 @@ public interface IFilesystem
 
     void TreeGoto(string newPath);
 
-    void TreeList(int depth, string outputMode);
+    void TreeList(int depth, string outputMode, string directorySymbol = "<>", string fileSymbol = "|@");
 
     void SetPath(string newPath);
 }

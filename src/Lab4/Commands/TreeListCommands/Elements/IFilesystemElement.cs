@@ -2,17 +2,9 @@
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.Elements;
 
-public class FileElement : IElement
+public interface IFilesystemElement
 {
-    public FileElement(string name)
-    {
-        Name = name;
-    }
-
     public string Name { get; }
 
-    public void Accept(IVisitor visitor)
-    {
-        visitor.Visit(this);
-    }
+    public void Accept(IVisitor visitor);
 }

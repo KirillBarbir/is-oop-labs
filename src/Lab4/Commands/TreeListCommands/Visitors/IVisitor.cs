@@ -4,7 +4,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.TreeListCommands.Visitors
 
 public interface IVisitor
 {
-    void Visit(FileElement fileElement);
+    void Visit(FileFilesystemElement fileFilesystemElement);
 
-    void Visit(DirectoryElement directoryElement);
+    void Visit(DirectoryFilesystemElement directoryFilesystemElement);
 }
