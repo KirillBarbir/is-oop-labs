@@ -1,25 +1,21 @@
-﻿using Lab5.Application.Contracts.Accounts;
+﻿using Lab5.Application.Abstractions.Repositories;
+using Lab5.Application.Contracts.Accounts;
 using Lab5.Application.Contracts.Admins;
 
 namespace Lab5.Application.Admins;
 
 public class AdminAuthorisationService : IAdminAuthorisationService
 {
-    private readonly ICurrentPasswordService _systemPassword;
+    private readonly ISystemPasswordRepository _systemPasswordRepository;
 
-    public AdminAuthorisationService(ICurrentPasswordService systemPassword)
+    public AdminAuthorisationService(ISystemPasswordRepository systemPasswordRepository)
     {
-        _systemPassword = systemPassword;
+        _systemPasswordRepository = systemPasswordRepository;
     }
 
     public AuthorisationResult GetAuthorisationResult(string systemPassword)
     {
-        if (_systemPassword.Password is null)
-        {
-            return new AuthorisationResult.Failure();
-        }
-
-        if (_systemPassword.Password.CheckPassword(systemPassword))
+        if (_systemPasswordRepository.CheckPassword(systemPassword) is AuthorisationResult.Success)
         {
             return new AuthorisationResult.Success();
         }

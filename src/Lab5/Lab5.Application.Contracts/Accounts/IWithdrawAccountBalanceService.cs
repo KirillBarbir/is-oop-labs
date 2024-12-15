@@ -1,6 +1,10 @@
-﻿namespace Lab5.Application.Contracts.Accounts;
+﻿using Lab5.Application.Models.Accounts;
+
+namespace Lab5.Application.Contracts.Accounts;
 
 public interface IWithdrawAccountBalanceService
 {
-    void Withdraw(long amount);
+    Account? Account { get; }
+
+    WithdrawingResult Withdraw(long id, long amount);
 }

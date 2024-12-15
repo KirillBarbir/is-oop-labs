@@ -4,13 +4,14 @@ namespace Lab5.Application.Models.Accounts;
 
 public class Account
 {
-    private readonly long _pin;
-    private readonly List<Operation> _history = [];
+    public long Pin { get; }
+
+    private readonly ICollection<Operation> _history = [];
 
     public Account(long id, long pin, long amount = 0)
     {
         Id = id;
-        _pin = pin;
+        Pin = pin;
         Amount = amount;
     }
 
@@ -33,16 +34,29 @@ public class Account
     public void Deposit(long amount)
     {
         Amount += amount;
-        _history.Add(new Operation(Amount, OperationType.TopUp));
+        _history.Add(new Operation(Amount, OperationType.Deposit));
     }
 
     public bool LogIn(long pin)
     {
-        return pin == _pin;
+        return pin == Pin;
     }
 
     public IEnumerable<Operation> ShowHistory()
     {
         return _history;
+    }
+
+    public void InitializeHistory(IEnumerable<Operation> history)
+    {
+        if (_history.Count != 0)
+        {
+            return;
+        }
+
+        foreach (Operation operation in history)
+        {
+            _history.Add(operation);
+        }
     }
 }

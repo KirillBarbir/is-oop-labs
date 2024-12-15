@@ -2,5 +2,5 @@
 
 public interface IUserAuthorisationService
 {
-    AuthorisationResult Authorise(long pin);
+    AuthorisationResult Authorise(long accountNumber, long pin);
 }

@@ -1,6 +1,10 @@
-﻿namespace Lab5.Application.Contracts.Accounts;
+﻿using Lab5.Application.Models.Accounts;
+
+namespace Lab5.Application.Contracts.Accounts;
 
 public interface IDepositToAccountService
 {
-    void Deposit(long amount);
+    Account? Account { get; }
+
+    void Deposit(long id, long amount);
 }

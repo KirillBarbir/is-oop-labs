@@ -1,5 +1,4 @@
 ﻿using Lab5.Application.Contracts.Admins;
-using Lab5.Application.Models.Accounts;
 using Spectre.Console;
 
 namespace Lab5.Presentation.Console.Scenarios.Admin.AdminScenarios;
@@ -20,7 +19,7 @@ public class AccountCreationScenario : IAdminScenario
         long number = long.Parse(AnsiConsole.Ask<string>("Create number: "));
         long pin = long.Parse(AnsiConsole.Ask<string>("Create pin: "));
 
-        Account result = _accountCreationService.CreateAccount(number, pin); // TODO: fix somehow
+        _accountCreationService.CreateAccount(number, pin);
         AnsiConsole.Ask<string>("Enter anything to proceed...");
     }
 }

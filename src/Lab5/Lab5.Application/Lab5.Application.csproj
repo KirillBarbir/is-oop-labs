@@ -7,14 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Lab5.Application.Abstractions\Lab5.Application.Abstractions.csproj" />
       <ProjectReference Include="..\Lab5.Application.Contracts\Lab5.Application.Contracts.csproj" />
       <ProjectReference Include="..\Lab5.Application.Models\Lab5.Application.Models.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="Lab5.Application">
-        <HintPath>..\Lab5\bin\Debug\net8.0\Lab5.Application.dll</HintPath>
-      </Reference>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     </ItemGroup>
 
 </Project>

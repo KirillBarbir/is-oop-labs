@@ -2,6 +2,6 @@
 
 public enum OperationType
 {
-    TopUp,
+    Deposit,
     Withdraw,
 }

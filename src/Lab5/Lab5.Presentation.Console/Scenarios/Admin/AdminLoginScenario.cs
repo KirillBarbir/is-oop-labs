@@ -35,8 +35,7 @@ public class AdminLoginScenario : IScenario
 
         if (message != "Success")
         {
-            AnsiConsole.WriteLine(message);
-            return;
+            throw new ApplicationException(message);
         }
 
         IEnumerable<IAdminScenario> scenarios = GetScenarios();

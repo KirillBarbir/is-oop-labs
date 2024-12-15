@@ -1,13 +1,17 @@
-﻿using Spectre.Console;
+﻿using Lab5.Application.Contracts.Accounts;
+using Spectre.Console;
 
 namespace Lab5.Presentation.Console.Scenarios.User;
 
 public class UserLoginScenario : IScenario
 {
-    private readonly IEnumerable<IScenarioProvider> _userScenarios;
+    private readonly IUserAuthorisationService _userAuthorisationService;
+    private readonly IEnumerable<IUserScenarioProvider> _userScenarios;
 
-    public UserLoginScenario(IEnumerable<IScenarioProvider> userScenarios)
+    public UserLoginScenario(IUserAuthorisationService userAuthorisationService, IEnumerable<IUserScenarioProvider> userScenarios)
     {
+        _userAuthorisationService = userAuthorisationService;
+
         _userScenarios = userScenarios;
     }
 
@@ -15,26 +19,39 @@ public class UserLoginScenario : IScenario
 
     public void Run()
     {
-        string accountNumber = AnsiConsole.Ask<string>("Enter  account number: ");
+        long accountNumber = long.Parse(AnsiConsole.Ask<string>("Enter  account number: "));
 
-        string pin = AnsiConsole.Ask<string>("Enter pin: ");
+        long pin = long.Parse(AnsiConsole.Ask<string>("Enter pin: "));
 
-        // TODO: check data via service
-        IEnumerable<IScenario> scenarios = GetScenarios();
+        AuthorisationResult result = _userAuthorisationService.Authorise(accountNumber, pin);
 
-        SelectionPrompt<IScenario> prompt = new SelectionPrompt<IScenario>()
+        string message = result switch
+        {
+            AuthorisationResult.Success => "Success",
+            AuthorisationResult.Failure => "Failure",
+            _ => throw new ArgumentOutOfRangeException(nameof(result)),
+        };
+
+        if (message is not "Success")
+        {
+            return;
+        }
+
+        IEnumerable<IUserScenario> scenarios = GetScenarios();
+
+        SelectionPrompt<IUserScenario> prompt = new SelectionPrompt<IUserScenario>()
             .Title("select action")
             .AddChoices(scenarios)
             .UseConverter(x => x.Name);
-        IScenario scenario = AnsiConsole.Prompt(prompt);
-        scenario.Run();
+        IUserScenario scenario = AnsiConsole.Prompt(prompt);
+        scenario.Run(accountNumber);
     }
 
-    private IEnumerable<IScenario> GetScenarios()
+    private IEnumerable<IUserScenario> GetScenarios()
     {
-        foreach (IScenarioProvider provider in _userScenarios)
+        foreach (IUserScenarioProvider provider in _userScenarios)
         {
-            if (provider.TryGetScenario(out IScenario? scenario))
+            if (provider.TryGetScenario(out IUserScenario? scenario))
                 yield return scenario;
         }
     }
