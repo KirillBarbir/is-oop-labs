@@ -7,23 +7,14 @@ namespace Lab5.Application.Accounts;
 public class UserAuthorisationService : IUserAuthorisationService
 {
     private readonly IAccountRepository _accountRepository;
-    private readonly DepositToAccountService _depositToAccountService;
-    private readonly ShowAccountBalanceService _showAccountBalanceService;
-    private readonly ShowAccountHistoryService _showAccountHistoryService;
-    private readonly WithdrawAccountBalanceService _withdrawAccountBalanceService;
+    private readonly IEnumerable<IAccountService> _accountServices;
 
     public UserAuthorisationService(
         IAccountRepository accountRepository,
-        DepositToAccountService depositToAccountService,
-        ShowAccountBalanceService showAccountBalanceService,
-        ShowAccountHistoryService showAccountHistoryService,
-        WithdrawAccountBalanceService withdrawAccountBalanceService)
+        IEnumerable<IAccountService> accountServices)
     {
         _accountRepository = accountRepository;
-        _depositToAccountService = depositToAccountService;
-        _showAccountBalanceService = showAccountBalanceService;
-        _showAccountHistoryService = showAccountHistoryService;
-        _withdrawAccountBalanceService = withdrawAccountBalanceService;
+        _accountServices = accountServices;
     }
 
     public AuthorisationResult Authorise(long accountNumber, long pin)
@@ -34,10 +25,11 @@ public class UserAuthorisationService : IUserAuthorisationService
             return new AuthorisationResult.Failure();
         }
 
-        _depositToAccountService.Account = account;
-        _showAccountBalanceService.Account = account;
-        _showAccountHistoryService.Account = account;
-        _withdrawAccountBalanceService.Account = account;
+        foreach (IAccountService service in _accountServices)
+        {
+            service.Account = account;
+        }
+
         if (account.LogIn(pin))
         {
             return new AuthorisationResult.Success();

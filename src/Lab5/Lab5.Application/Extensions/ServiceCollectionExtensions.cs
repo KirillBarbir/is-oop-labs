@@ -30,6 +30,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IWithdrawAccountBalanceService>(
             p => p.GetRequiredService<WithdrawAccountBalanceService>());
 
+        services.AddScoped<IAccountService, IDepositToAccountService>(p => p.GetRequiredService<DepositToAccountService>());
+        services.AddScoped<IAccountService, IShowAccountBalanceService>(p => p.GetRequiredService<ShowAccountBalanceService>());
+        services.AddScoped<IAccountService, IShowAccountHistoryService>(p => p.GetRequiredService<ShowAccountHistoryService>());
+        services.AddScoped<IAccountService, IWithdrawAccountBalanceService>(p => p.GetRequiredService<WithdrawAccountBalanceService>());
         return services;
     }
 }

@@ -27,14 +27,14 @@ public class Account
         }
 
         Amount -= amount;
-        _history.Add(new Operation(Amount, OperationType.Withdraw));
+        _history.Add(new Operation(Id, amount, OperationType.Withdraw));
         return true;
     }
 
     public void Deposit(long amount)
     {
         Amount += amount;
-        _history.Add(new Operation(Amount, OperationType.Deposit));
+        _history.Add(new Operation(Id, amount, OperationType.Deposit));
     }
 
     public bool LogIn(long pin)

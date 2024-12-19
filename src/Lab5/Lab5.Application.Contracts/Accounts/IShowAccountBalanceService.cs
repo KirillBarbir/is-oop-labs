@@ -1,10 +1,6 @@
-﻿using Lab5.Application.Models.Accounts;
+﻿namespace Lab5.Application.Contracts.Accounts;
 
-namespace Lab5.Application.Contracts.Accounts;
-
-public interface IShowAccountBalanceService
+public interface IShowAccountBalanceService : IAccountService
 {
-    Account? Account { get; }
-
     long ShowAccountBalance(long id);
 }

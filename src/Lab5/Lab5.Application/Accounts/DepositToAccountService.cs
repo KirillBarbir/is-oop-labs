@@ -1,7 +1,6 @@
 ﻿using Lab5.Application.Abstractions.Repositories;
 using Lab5.Application.Contracts.Accounts;
 using Lab5.Application.Models.Accounts;
-using Lab5.Application.Models.Operations;
 
 namespace Lab5.Application.Accounts;
 
@@ -25,6 +24,6 @@ public class DepositToAccountService : IDepositToAccountService
 
         Account.Deposit(amount);
         _accountRepository.UpdateAccount(Account);
-        _accountRepository.WriteOperation(id, amount, OperationType.Deposit);
+        _accountRepository.WriteOperation(Account.ShowHistory().Last());
     }
 }

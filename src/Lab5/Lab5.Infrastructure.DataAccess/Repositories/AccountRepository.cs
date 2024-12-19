@@ -54,7 +54,10 @@ public class AccountRepository : IAccountRepository
         var operations = new List<Operation>();
         while (operationReader.Read())
         {
-            operations.Add(new Operation(operationReader.GetInt64(1), operationReader.GetFieldValue<OperationType>(2)));
+            operations.Add(new Operation(
+                operationReader.GetInt64(0),
+                operationReader.GetInt64(1),
+                operationReader.GetFieldValue<OperationType>(2)));
         }
 
         account.InitializeHistory(operations);
@@ -97,7 +100,7 @@ public class AccountRepository : IAccountRepository
         command.ExecuteNonQuery();
     }
 
-    public void WriteOperation(long id, long amount, OperationType operationType)
+    public void WriteOperation(Operation operation)
     {
         const string sql = """
                            insert into Operations (account_id, amount, operation_type)
@@ -108,9 +111,9 @@ public class AccountRepository : IAccountRepository
             .AsTask()
             .GetAwaiter()
             .GetResult();
-        var idParameter = new NpgsqlParameter("@id", id);
-        var amountParameter = new NpgsqlParameter("@amount", amount);
-        var typeParameter = new NpgsqlParameter("@operationType", operationType);
+        var idParameter = new NpgsqlParameter("@id", operation.AccountId);
+        var amountParameter = new NpgsqlParameter("@amount", operation.Amount);
+        var typeParameter = new NpgsqlParameter("@operationType", operation.OperationType);
         using var command = new NpgsqlCommand(sql, connection);
         command.Parameters.Add(idParameter);
         command.Parameters.Add(amountParameter);

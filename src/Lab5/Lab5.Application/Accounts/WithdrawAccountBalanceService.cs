@@ -1,7 +1,6 @@
 ﻿using Lab5.Application.Abstractions.Repositories;
 using Lab5.Application.Contracts.Accounts;
 using Lab5.Application.Models.Accounts;
-using Lab5.Application.Models.Operations;
 
 namespace Lab5.Application.Accounts;
 
@@ -26,7 +25,7 @@ public class WithdrawAccountBalanceService : IWithdrawAccountBalanceService
         if (Account.Withdraw(amount))
         {
             _accountRepository.UpdateAccount(Account);
-            _accountRepository.WriteOperation(id, amount, OperationType.Withdraw);
+            _accountRepository.WriteOperation(Account.ShowHistory().Last());
             return new WithdrawingResult.Success();
         }
 

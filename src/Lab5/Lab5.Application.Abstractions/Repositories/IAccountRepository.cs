@@ -11,5 +11,5 @@ public interface IAccountRepository
 
     void WriteAccount(Account account);
 
-    void WriteOperation(long id, long amount, OperationType operationType);
+    void WriteOperation(Operation operation);
 }
